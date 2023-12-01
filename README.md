@@ -1,11 +1,6 @@
 ![TIQ Quiz App](https://play-lh.googleusercontent.com/H1uWifd3u6aK-8Q_kQGMhdpqa4iQ450J52qEwnE6b_wUCq1E8F1qTIm2xkspnpVv5g=w240-h480-rw)
 
 # TIQ Quiz App
-...
-(rest of the README content)
-
-
-# TIQ Quiz App
 
 ## About
 TIQ Quiz App is an interactive learning platform that offers engaging quizzes based on the Quran. Designed to promote religious education through technology, our app provides a user-friendly experience with daily reminders and progress tracking.
