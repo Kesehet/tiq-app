@@ -19,6 +19,11 @@
         </div>
         <button type="submit" class="w3-button w3-block w3-teal">Login</button>
     </form>
+
+    <!-- Google Login Button -->
+    <div class="w3-section">
+        <a href="{{ url('/auth/google') }}" class="w3-button w3-block w3-red">Login with Google</a>
+    </div>
 </div>
 
 </body>

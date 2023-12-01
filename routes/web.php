@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\QuizController;
+use App\Http\Controllers\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 
 Route::get('auth/google', 'Auth\LoginController@redirectToGoogle');
 Route::get('auth/google/callback', 'Auth\LoginController@handleGoogleCallback');
