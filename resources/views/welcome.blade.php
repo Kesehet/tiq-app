@@ -97,7 +97,7 @@
     </div>
 
     <div class="slide">
-        <img src="https://c4.wallpaperflare.com/wallpaper/70/280/987/sunset-nature-2560x1600-nature-sunsets-hd-art-wallpaper-preview.jpg" alt="Management">
+        <img src="{{asset('imgs/Login now.png')}}" alt="Management">
         
         <button class="button w3-feature" >Login Now</button>
     </div>
