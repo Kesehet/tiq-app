@@ -93,7 +93,6 @@
     <div class="slide">
         <img src="{{asset('imgs/Connect with a community.png')}}" alt="Management">
         <p>Connect with a community of learners.</p>
-        <button class="button w3-feature" >Get Started</button>
     </div>
 
     <div class="slide">
@@ -110,8 +109,8 @@ const slides = document.querySelectorAll(".slide");
 
 function changeSlide(n) {
   if(currentSlide == slides.length - 1) {
-    alert("Login Now.");
     clearInterval(slideshowInterval);
+    
     return;
   }
   slides[currentSlide].classList.remove("active");
