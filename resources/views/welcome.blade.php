@@ -47,7 +47,7 @@
         }
         .slide p {
             margin-top: 24px;
-            font-size: 18px;
+            font-size: 36px;
             line-height: 1.6;
         }
         .button {
@@ -81,13 +81,13 @@
     <div class="slide active">
         <img src="{{asset('imgs/growth from quiz.png')}}" alt="Savings">
         <p>Welcome to TIQ Quiz! Begin your learning journey.</p>
-        <button class="button w3-feature" >Next</button>
+        
     </div>
 
     <div class="slide">
         <img src="{{asset('imgs/interact quiz.png')}}" alt="Statistics">
         <p>Engage with interactive quizzes and track your progress.</p>
-        <button class="button w3-feature" >Next</button>
+        
     </div>
 
     <div class="slide">
@@ -119,8 +119,8 @@ function changeSlide(n) {
   slides[currentSlide].classList.add("active");
 }
 
-// Optional: Automatic slide change every 5 seconds
-var slideshowInterval = setInterval(() => changeSlide(1), 5000);
+// Optional: Automatic slide change every 2 seconds
+var slideshowInterval = setInterval(() => changeSlide(1), 2000);
 </script>
 
 </body>
