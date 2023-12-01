@@ -17,9 +17,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 
 Route::get('auth/google', 'Auth\LoginController@redirectToGoogle');
 Route::get('auth/google/callback', 'Auth\LoginController@handleGoogleCallback');
+
 
 
 Route::resource('quizzes', 'QuizController');
