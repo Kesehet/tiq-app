@@ -118,8 +118,8 @@ function changeSlide(n) {
   slides[currentSlide].classList.add("active");
 }
 
-// Optional: Automatic slide change every 2 seconds
-var slideshowInterval = setInterval(() => changeSlide(1), 2000);
+// Optional: Automatic slide change every 3 seconds
+var slideshowInterval = setInterval(() => changeSlide(1), 3000);
 </script>
 
 </body>
