@@ -37,7 +37,7 @@ class LoginController extends Controller
             // and log them in, or create a new user if they do not exist
 
             // Redirect to a desired location after successful authentication
-            return redirect()->intended('/dashboard');
+            return redirect()->intended('/home');
         } catch (\Exception $e) {
             // Handle exception or failed authentication
             return redirect()->route('login');

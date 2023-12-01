@@ -26,4 +26,9 @@ Route::get('auth/google/callback', [LoginController::class, 'handleGoogleCallbac
 
 
 
+Route::get('/home', function () {
+    return view('app.home');
+});
+
+
 Route::resource('quizzes', 'QuizController');
