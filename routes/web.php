@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\AppController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,10 +27,10 @@ Route::get('auth/google', [LoginController::class, 'redirectToGoogle']);
 Route::get('auth/google/callback', [LoginController::class, 'handleGoogleCallback']);
 
 
+Route::get('/post-login', [AppController::class, 'postLoginRedirect'])->name('post-login');
+Route::get('/home', [AppController::class, 'home'])->name('home');
+Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
-Route::get('/home', function () {
-    return view('app.home');
-});
 
 
 Route::resource('quizzes', 'QuizController');

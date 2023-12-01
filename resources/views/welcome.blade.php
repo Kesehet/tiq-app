@@ -110,7 +110,8 @@ const slides = document.querySelectorAll(".slide");
 function changeSlide(n) {
   if(currentSlide == slides.length - 1) {
     clearInterval(slideshowInterval);
-    
+    window.location.href = '{{ route('login') }}';
+    return;
     return;
   }
   slides[currentSlide].classList.remove("active");
