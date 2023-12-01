@@ -91,7 +91,7 @@
     </div>
 
     <div class="slide">
-        <img src="https://wallpapers.com/images/featured/beautiful-3vau5vtfa3qn7k8v.jpg" alt="Management">
+        <img src="{{asset('imgs/Connect with a community.png')}}" alt="Management">
         <p>Connect with a community of learners.</p>
         <button class="button w3-feature" >Get Started</button>
     </div>
