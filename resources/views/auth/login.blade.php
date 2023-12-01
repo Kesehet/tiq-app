@@ -19,11 +19,12 @@
 </head>
 <body>
 
-<div class="w3-container w3-center w3-padding-64">
-    <h2>Login</h2>
+<div class="w3-display-container w3-padding-64" style="height: 100vh">
+    
     <!-- Google Login Button -->
-    <div class="w3-section">
-        <a href="{{ url('/auth/google') }}" class="w3-button w3-block w3-feature">Login with Google</a>
+    <div class="w3-display-middle">
+        <h1 class="w3-center w3-round w3-xxlarge">Login</h1>
+        <a href="{{ url('/auth/google') }}" class="w3-button w3-round w3-xxlarge w3-block w3-feature">Login with Google</a>
     </div>
 </div>
 
