@@ -21,6 +21,8 @@ class AppController extends Controller
     
     public function home()
     {
-        return view('app.home');
+        return view('app.index', [
+            'showPage' => 'home',
+        ]);
     }
 }
