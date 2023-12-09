@@ -7,13 +7,22 @@ use Illuminate\Support\Facades\Auth;
 
 class AppController extends Controller
 {
-    public function postLoginRedirect()
+    // Construct 
+    public function __construct()
     {
+        $this->middleware('auth');
+
         // Check if the user is a team member
         if (Auth::check() && Auth::user()->isTeamMember()) {
             // Redirect to the dashboard
             return redirect()->route('dashboard');
         }
+
+    }
+
+    public function postLoginRedirect()
+    {
+
 
         // Default redirect for other users
         return redirect()->route('home');
@@ -23,6 +32,14 @@ class AppController extends Controller
     {
         return view('app.index', [
             'showPage' => 'home',
+        ]);
+    }
+
+    public function quiz()
+    {
+
+        return view('app.index', [
+            'showPage' => 'quiz',
         ]);
     }
 }
