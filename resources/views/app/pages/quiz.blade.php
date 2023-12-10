@@ -6,28 +6,28 @@
 </head>
 <body>
 
-<div class="w3-container w3-padding w3-margin">
+<div class="w3-container">
     <div id="question" class="w3-panel w3-border w3-padding">Question will go here</div>
-    <ul class="w3-ul w3-border">
+    <ul class="w3-ul w3-border" id="option_holder">
         <li id="option1" class="w3-hover-light-grey">Option 1</li>
         <li id="option2" class="w3-hover-light-grey">Option 2</li>
         <li id="option3" class="w3-hover-light-grey">Option 3</li>
         <li id="option4" class="w3-hover-light-grey">Option 4</li>
     </ul>
-    <button class="w3-button w3-blue w3-margin-top" onclick="previousQuestion()">Previous</button>
-    <button class="w3-button w3-blue w3-margin-top" onclick="nextQuestion()">Next</button>
+    <button id="previous" class="w3-button w3-blue w3-margin-top" onclick="previousQuestion()">Previous</button>
+    <button id="next" class="w3-button w3-blue w3-margin-top" onclick="nextQuestion()">Next</button>
 </div>
 
-<script src="{{asset('scripts/quiz.js')}}"></script>
+
 <script>
     let currentQuestionIndex = 0;
-const questions = [
-    { question: "What is the capital of France?", options: ["Paris", "Berlin", "Rome", "Madrid"] },
-    { question: "What is 2 + 2?", options: ["3", "4", "5", "6"] },
-    // Add more questions here
-];
-// Initialize
-displayQuestion();
+    const QUIZ = {!! json_encode($quiz->readQuizWithQuestionsAndTranslations($quiz->id)) !!}
+    
+    
 </script>
+
+<script src="{{asset('scripts/quiz.js')}}?refresh={{random_int(1, 1000)}}"></script>
+
+
 </body>
 </html>

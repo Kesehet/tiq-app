@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Quiz;
 
 class AppController extends Controller
 {
@@ -40,6 +41,7 @@ class AppController extends Controller
 
         return view('app.index', [
             'showPage' => 'quiz',
+            'quiz' => Quiz::find(1),
         ]);
     }
 }

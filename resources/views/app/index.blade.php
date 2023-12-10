@@ -28,6 +28,7 @@
             margin: 40px 0px;
             text-align: center;
             overflow: scroll-y;
+            
         }
 
         .bottom-nav {
@@ -39,6 +40,7 @@
             position: fixed;
             width: 100%;
             bottom: 0;
+            z-index: 100;
         }
 
         .bottom-nav a {
@@ -58,6 +60,7 @@
             position: fixed;
             width: 100%;
             top: 0;
+            z-index: 100;
         }
 
         .top-nav a {
