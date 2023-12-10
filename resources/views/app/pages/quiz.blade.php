@@ -14,15 +14,15 @@
         <li id="option3" class="w3-hover-light-grey">Option 3</li>
         <li id="option4" class="w3-hover-light-grey">Option 4</li>
     </ul>
-    <button id="previous" class="w3-button w3-blue w3-margin-top" onclick="previousQuestion()">Previous</button>
-    <button id="next" class="w3-button w3-blue w3-margin-top" onclick="nextQuestion()">Next</button>
+    <button id="previous" class="w3-button w3-blue w3-margin-top" onclick="previousQuestion()"><i class="fa fa-arrow-left"></i></button>
+    <button id="next" class="w3-button w3-blue w3-margin-top" onclick="nextQuestion()"><i class="fa fa-arrow-right"></i></button>
 </div>
 
 
 <script>
     let currentQuestionIndex = 0;
     const QUIZ = {!! json_encode($quiz->readQuizWithQuestionsAndTranslations($quiz->id)) !!}
-    
+    var ACTIVE_LANGUAGE = "default";
     
 </script>
 

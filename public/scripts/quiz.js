@@ -5,11 +5,12 @@ const QUESTIONS = QUIZ.questions;
 var question_index = 0;
 var ANSWERS = {};
 
+
 function getQuestions(){
     var ret = [];
     QUESTIONS.forEach(question => {
         var translations = {};
-        var available_languages = [];
+        var available_languages = ["default"];
         question.translations.forEach(translation => {
             translations[translation.language] = {
                 translated_text : translation.translated_text,
@@ -18,6 +19,11 @@ function getQuestions(){
             };
         available_languages.push(translation.language);
         });
+        translations["default"] = {
+            translated_text : question.question_text,
+            question_id : question.id,
+            language : "default"
+        };
 
         ret.push({
             id: question.id,
@@ -37,10 +43,13 @@ function processOptions(options){
         option.translation_options.forEach(translation => {
             translations[translation.language] = {
                 translated_text : translation.translated_text,
-                option_id : translation.question_id,
                 language : translation.language
             };
         });
+        translations["default"] = {
+            translated_text : option.option_text,
+            language : "default"
+        };
         ret.push(
             {
                 id: option.id,
@@ -93,9 +102,9 @@ function addAnswerToList(id){
 function setQuestion(){
     clearOptions();
     var question = getQuestions()[question_index];
-    document.getElementById("question").innerHTML = question.question;
+    document.getElementById("question").innerHTML = question.translations[ACTIVE_LANGUAGE].translated_text;
     question.answers.forEach(answer => {
-        addOption(answer.text,answer.id);
+        addOption(answer.translation[ACTIVE_LANGUAGE].translated_text,answer.id);
     });
 }
 
@@ -107,7 +116,11 @@ function nextQuestion(){
         finishQuiz();
     }
     
-    
+}
+
+function setLanguage(language){
+    ACTIVE_LANGUAGE = language;
+    setQuestion();
 }
 
 function previousQuestion(){
@@ -127,8 +140,24 @@ function finishQuiz(){
     }
 }
 
-function submitAnswers(){
-    console.log(ANSWERS);
+function submitAnswers() {
+    fetch('/api/submit-quiz', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // Fetch CSRF token
+        },
+        body: JSON.stringify({answers: ANSWERS})
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+        window.location.href = '/quiz-results'; // Redirect to results page
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
 }
+
 
 setQuestion();
