@@ -151,7 +151,7 @@ function submitAnswers() {
     .then(response => response.json())
     .then(data => {
         console.log('Success:', data);
-        window.location.href = BASE_URL+'/quiz-results'; // Redirect to results page
+        window.location.href = BASE_URL+'/quiz-results/'+QUIZ.id;
     })
     .catch((error) => {
         console.error('Error:', error);
