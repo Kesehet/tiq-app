@@ -13,7 +13,7 @@ class Answer extends Model
     public $timestamps = true;
 
     // Fillable fields for mass assignment
-    protected $fillable = ['user_id', 'question_id', 'option_id', 'answer_text', 'is_correct'];
+    protected $fillable = ['user_id', 'quiz_id', 'question_id', 'option_id', 'is_correct'];
 
     /**
      * The user who provided this answer.
