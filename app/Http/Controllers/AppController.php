@@ -33,15 +33,16 @@ class AppController extends Controller
     {
         return view('app.index', [
             'showPage' => 'home',
+            'latestQuizzes' => Quiz::latest()->take(5)->get(),
         ]);
     }
 
-    public function quiz()
+    public function quiz($id)
     {
 
         return view('app.index', [
             'showPage' => 'quiz',
-            'quiz' => Quiz::find(1),
+            'quiz' => Quiz::find($id),
         ]);
     }
 }
