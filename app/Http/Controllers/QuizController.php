@@ -49,4 +49,16 @@ class QuizController extends Controller
     }
 
 
+    public function results($quizId)
+    {
+        $user = auth()->user();
+        $answers = Answer::where('user_id', $user->id)
+                        ->where('quiz_id', $quizId)
+                        ->get();
+        
+
+        return view('quiz.results', compact('answers', 'otherData'));
+    }
+
+
 }
