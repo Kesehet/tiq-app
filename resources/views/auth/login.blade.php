@@ -24,8 +24,8 @@
     
     <!-- Google Login Button -->
     <div class="w3-display-middle">
-        <h1 class="w3-center w3-round w3-xxlarge">Login</h1>
-        <a href="{{ url('/auth/google') }}" class="w3-button w3-round w3-xxlarge w3-block w3-feature">Login with Google</a>
+        <h1 class="w3-center w3-round w3-large">Login</h1>
+        <a href="{{ url('/auth/google') }}" class="w3-button w3-round w3-large w3-block w3-feature">Login with Google</a>
     </div>
 </div>
 

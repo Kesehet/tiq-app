@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\QuizController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// In routes/api.php
-Route::post('/submit-quiz', 'QuizController@submit')->name('submit-quiz');
+
 

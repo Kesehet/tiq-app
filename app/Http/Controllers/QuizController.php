@@ -11,11 +11,13 @@ class QuizController extends Controller
         $this->middleware('auth');
     }
 
-    public function submit(Request $request) {
-        $answers = $request->input('answers');
+    public function submit(Request $request, $id) {
+        
 
-        // Validate and process answers...
-        // Return a response (success, score, etc.)
+
+        $answers = $request->input('answers');
+            
+        return request()->json(['success' => true]);
     }
 
 }

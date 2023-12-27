@@ -38,3 +38,6 @@ Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashb
 
 
 Route::resource('quizzes', 'QuizController');
+
+// APIs 
+Route::post('/api/submit-quiz/{id}', [QuizController::class, 'submit'])->name('submit-quiz');

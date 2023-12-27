@@ -100,6 +100,9 @@
 
         
     </style>
+    <script>
+        var BASE_URL = "{{ url('/') }}";
+    </script>
 </head>
 <body>
     <div class="top-nav w3-feature">

@@ -112,10 +112,9 @@ function nextQuestion(){
     if(question_index < getQuestions().length - 1){
         question_index++;
         setQuestion();
-    }else{
+    } else{
         finishQuiz();
-    }
-    
+    }    
 }
 
 function setLanguage(language){
@@ -141,7 +140,7 @@ function finishQuiz(){
 }
 
 function submitAnswers() {
-    fetch('/api/submit-quiz', {
+    fetch(BASE_URL+'/api/submit-quiz/'+QUIZ.id, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -152,7 +151,7 @@ function submitAnswers() {
     .then(response => response.json())
     .then(data => {
         console.log('Success:', data);
-        window.location.href = '/quiz-results'; // Redirect to results page
+        window.location.href = BASE_URL+'/quiz-results'; // Redirect to results page
     })
     .catch((error) => {
         console.error('Error:', error);
