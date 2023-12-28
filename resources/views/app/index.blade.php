@@ -11,6 +11,10 @@
     <script src="{{ asset('scripts/charts.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('css/elements-basic.css') }}">
     <link rel="stylesheet" href="{{ asset('css/colors.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&display=swap" rel="stylesheet">
 
 
 
@@ -95,6 +99,10 @@
 
         .scroll-content {
             padding: 0px;
+        }
+
+        .quran-text {
+            font-family: 'Amiri Quran', serif;
         }
 
 

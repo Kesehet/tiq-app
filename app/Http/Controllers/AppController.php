@@ -76,14 +76,16 @@ class AppController extends Controller
     
 
         $leaderboard = DB::table('answers')
-        ->select('users.name', DB::raw('SUM(answers.score) as total_score'))
-        ->join('users', 'answers.user_id', '=', 'users.id')
-        ->where('answers.quiz_id', $quizId)
-        ->groupBy('answers.user_id')
-        ->orderBy('total_score', 'desc')
-        ->orderBy('answers.created_at', 'asc')
-        ->take(100)
-        ->get();
+                 ->join('options', 'answers.option_id', '=', 'options.id')
+                 ->select('users.name', DB::raw('SUM(options.score) as total_score'))
+                 ->join('users', 'answers.user_id', '=', 'users.id')
+                 ->where('answers.quiz_id', $quizId)
+                 ->groupBy('answers.user_id')
+                 ->orderBy('total_score', 'desc')
+                 ->orderBy('answers.created_at', 'asc')
+                 ->take(100)
+                 ->get();
+
         
 
         return view('app.index', [

@@ -31,6 +31,15 @@ class Answer extends Model
         return $this->belongsTo(Question::class);
     }
 
+    public function score()
+    {
+        // Example: Assign 1 point for each correct answer
+        if ($this->option && $this->option->is_correct) {
+            return $this->option->score; // Use the score from the Option model
+        }
+        return 0;
+    }
+
     /**
      * The option chosen for this answer, if it's a multiple-choice question.
      */
