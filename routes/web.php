@@ -30,13 +30,13 @@ Route::get('auth/google/callback', [LoginController::class, 'handleGoogleCallbac
 Route::get('/post-login', [AppController::class, 'postLoginRedirect'])->name('post-login');
 Route::get('/home', [AppController::class, 'home'])->name('home');
 Route::get('/quiz/{id}', [AppController::class, 'quiz'])->name('quiz');
+Route::get('/quiz-results/{quizId}', [AppController::class, 'quizResult'])->name('quiz-results');
 
 
 
 Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
 
-Route::get('/quiz-results/{id}', [DashboardController::class, 'results'])->name('quiz-results');
 
 
 

@@ -6,6 +6,7 @@ use App\Models\Answer;
 use App\Models\Option;
 use App\Models\Quiz;
 use App\Models\User;
+use App\Models\Question;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -49,16 +50,9 @@ class QuizController extends Controller
     }
 
 
-    public function results($quizId)
-    {
-        $user = auth()->user();
-        $answers = Answer::where('user_id', $user->id)
-                        ->where('quiz_id', $quizId)
-                        ->get();
-        
 
-        return view('quiz.results', compact('answers', 'otherData'));
-    }
+    
+
 
 
 }

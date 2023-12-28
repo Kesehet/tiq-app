@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Quiz;
+use App\Models\Answer;
+use App\Models\Option;
+use App\Models\User;
+use App\Models\Question;
+use Illuminate\Support\Facades\DB;
 
 class AppController extends Controller
 {
@@ -43,6 +48,40 @@ class AppController extends Controller
         return view('app.index', [
             'showPage' => 'quiz',
             'quiz' => Quiz::find($id),
+        ]);
+    }
+
+    public function quizResult($quizId)
+    {
+        $user = auth()->user();
+        $totalScore = 0;
+        $correctAnswers = 0;
+    
+        // Retrieve all answers for the quiz made by the user
+        $answers = Answer::where('user_id', $user->id)
+                         ->where('quiz_id', $quizId)
+                         ->get();
+    
+        foreach ($answers as $answer) {
+            // Assuming each option knows its own score and whether it's correct
+            if ($answer->option && $answer->option->is_correct) {
+                $correctAnswers++;
+                $totalScore += $answer->option->score; // Add score of the correct option
+            }
+            // Alternatively, if the score is based on the question
+            // $totalScore += $answer->question->score; // Add score of the question
+        }
+    
+        $totalQuestions = Question::where('quiz_id', $quizId)->count();
+    
+        
+
+        return view('app.index', [
+            'totalScore' => $totalScore,
+            'correctAnswers' => $correctAnswers,
+            'totalQuestions' => $totalQuestions,
+            'showPage' => 'quizResult',
+            'quiz' => Quiz::find($quizId),
         ]);
     }
 }

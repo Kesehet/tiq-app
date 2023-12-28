@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Quiz Page</title>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-</head>
-<body>
+
 
 <div class="w3-container">
     <div id="question" class="w3-panel w3-border w3-padding">Question will go here</div>
@@ -29,5 +23,3 @@
 <script src="{{asset('scripts/quiz.js')}}?refresh={{random_int(1, 1000)}}"></script>
 
 
-</body>
-</html>
