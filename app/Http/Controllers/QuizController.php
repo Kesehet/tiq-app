@@ -24,6 +24,8 @@ class QuizController extends Controller
         $user = auth()->user(); // Get the authenticated user
         $answersData = $request->input('answers');
 
+        
+
         foreach ($answersData as $questionId => $optionId) {
             $isCorrect = false;
             $option = Option::find($optionId);

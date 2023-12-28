@@ -74,10 +74,21 @@ class AppController extends Controller
     
         $totalQuestions = Question::where('quiz_id', $quizId)->count();
     
+
+        $leaderboard = DB::table('answers')
+        ->select('users.name', DB::raw('SUM(answers.score) as total_score'))
+        ->join('users', 'answers.user_id', '=', 'users.id')
+        ->where('answers.quiz_id', $quizId)
+        ->groupBy('answers.user_id')
+        ->orderBy('total_score', 'desc')
+        ->orderBy('answers.created_at', 'asc')
+        ->take(100)
+        ->get();
         
 
         return view('app.index', [
             'totalScore' => $totalScore,
+            'leaderboard' => $leaderboard,
             'correctAnswers' => $correctAnswers,
             'totalQuestions' => $totalQuestions,
             'showPage' => 'quizResult',
