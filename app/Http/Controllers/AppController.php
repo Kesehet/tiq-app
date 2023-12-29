@@ -116,4 +116,12 @@ class AppController extends Controller
             'quiz' => Quiz::find($quizId),
         ]);
     }
+
+
+    public function settings(){
+
+        return view('app.index', [
+            'showPage' => 'settings',
+        ]);
+    }
 }
