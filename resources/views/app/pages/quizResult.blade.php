@@ -2,16 +2,18 @@
 
 
 <div class="w3-card-4">
+    <div class="w3-col s12 l6 m6 w3-center">
+        <canvas id="resultsChart" ></canvas>
+    </div>
+    <div class="w3-col s12 l6 m6">
+        <p><strong>Total Questions:</strong> {{ $totalQuestions }}</p>
+        <p><strong>Correct Answers:</strong> {{ $correctAnswers }}</p>
+        <p><strong>Your Score:</strong> {{ $totalScore }}</p>
+        <hr/>
+    </div>
     
-    <canvas id="resultsChart" ></canvas>
-    
-    <p><strong>Total Questions:</strong> {{ $totalQuestions }}</p>
-    <p><strong>Correct Answers:</strong> {{ $correctAnswers }}</p>
-    <p><strong>Your Score:</strong> {{ $totalScore }}</p>
 
-    <hr/>
-
-    <div class="">
+    <div class="w3-col s12 l6 m6">
         <h2>Leaderboard</h2>
         <table class="w3-table w3-striped w3-bordered">
             <tr>
@@ -51,18 +53,18 @@
                     label: 'Quiz Results',
                     data: [{{ $correctAnswers }}, {{ $totalQuestions - $correctAnswers }}],
                     backgroundColor: [
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 99, 132, 0.2)'
+                        'rgba(0, 92, 39, 0.4)',
+                        'rgba(255, 99, 132, 0.4)'
                     ],
                     borderColor: [
-                        'rgba(54, 162, 235, 1)',
+                        'rgba(0, 92, 39, 1)',
                         'rgba(255, 99, 132, 1)'
                     ],
                     borderWidth: 1
                 }]
             },
             options: {
-                responsive: false,
+                responsive: true,
                 maintainAspectRatio: false,
             }
         });
