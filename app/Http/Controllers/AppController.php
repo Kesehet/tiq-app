@@ -99,6 +99,9 @@ class AppController extends Controller
             ->values()
             ->all();
     
+            $questionsWithAnswers = Question::with(['options', 'answers' => function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            }])->where('quiz_id', $quizId)->get();
     
 
         
@@ -108,6 +111,7 @@ class AppController extends Controller
             'leaderboard' => $leaderboard,
             'correctAnswers' => $correctAnswers,
             'totalQuestions' => $totalQuestions,
+            'questionsWithAnswers' => $questionsWithAnswers,
             'showPage' => 'quizResult',
             'quiz' => Quiz::find($quizId),
         ]);
