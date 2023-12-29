@@ -17,7 +17,6 @@
     let currentQuestionIndex = 0;
     const QUIZ = {!! json_encode($quiz->readQuizWithQuestionsAndTranslations($quiz->id)) !!}
     var ACTIVE_LANGUAGE = "default";
-    
 </script>
 
 <script src="{{asset('scripts/quiz.js')}}?refresh={{random_int(1, 1000)}}"></script>

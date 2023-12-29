@@ -46,4 +46,10 @@ class User extends Authenticatable
     {
         return false;
     }
+
+    public function language()
+    {
+        return $this->belongsTo(Language::class);
+    }
+
 }
