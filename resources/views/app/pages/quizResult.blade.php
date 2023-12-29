@@ -1,7 +1,7 @@
 
 
 
-<div class="w3-card-4 w3-margin w3-padding">
+<div class="w3-card-4">
     
     <canvas id="resultsChart" ></canvas>
     
@@ -9,7 +9,9 @@
     <p><strong>Correct Answers:</strong> {{ $correctAnswers }}</p>
     <p><strong>Your Score:</strong> {{ $totalScore }}</p>
 
-    <div class="w3-card-4 w3-margin w3-padding">
+    <hr/>
+
+    <div class="">
         <h2>Leaderboard</h2>
         <table class="w3-table w3-striped w3-bordered">
             <tr>
@@ -18,13 +20,20 @@
                 <th>Score</th>
             </tr>
             @foreach ($leaderboard as $index => $user)
-                <tr>
+                @if ($index % 2 == 0)
+                    <tr class="w3-animate-left">
+                @else
+                    <tr class="w3-animate-right">
+                @endif
                     <td>{{ $index + 1 }}</td>
-                    <td>{{ $user->name }}</td>
-                    <td>{{ $user->total_score }}</td>
+                    <td>{{$user['name']}}</td>
+                    <td>{{ $user['total_score'] }}</td>
                 </tr>
             @endforeach
         </table>
+
+        <hr/>
+
     </div>
 
     

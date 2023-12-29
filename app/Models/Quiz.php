@@ -11,6 +11,13 @@ class Quiz extends Model
 
     // Disable writing to this model
     public $timestamps = false;
+
+    protected $fillable = [
+        'title',
+        'description',
+    ];
+    
+
     protected $guarded = [];
 
     /**

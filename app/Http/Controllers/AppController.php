@@ -74,17 +74,32 @@ class AppController extends Controller
     
         $totalQuestions = Question::where('quiz_id', $quizId)->count();
     
-
-        $leaderboard = DB::table('answers')
-                 ->join('options', 'answers.option_id', '=', 'options.id')
-                 ->select('users.name', DB::raw('SUM(options.score) as total_score'))
-                 ->join('users', 'answers.user_id', '=', 'users.id')
-                 ->where('answers.quiz_id', $quizId)
-                 ->groupBy('answers.user_id')
-                 ->orderBy('total_score', 'desc')
-                 ->orderBy('answers.created_at', 'asc')
-                 ->take(100)
-                 ->get();
+ 
+        
+        $leaderboard = Answer::with('user', 'option')
+            ->where('quiz_id', $quizId)
+            ->get()
+            ->groupBy('user_id')
+            ->map(function ($answers) {
+                // Check if the user is loaded and has a name
+                $user = $answers->first()->user;
+                if ($user) {
+                    return [
+                        'name' => $user->name,
+                        'total_score' => $answers->sum(function ($answer) {
+                            return $answer->option ? $answer->option->score : 0;
+                        })
+                    ];
+                }
+                return null; // or handle it in a way that suits your application logic
+            })
+            ->filter() // Remove null values
+            ->sortByDesc('total_score')
+            ->take(10)
+            ->values()
+            ->all();
+    
+    
 
         
 
