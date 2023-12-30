@@ -23,8 +23,8 @@
     </script>
 </head>
 <body>
-    <div class="top-nav w3-feature">
-        TIQ App
+    <div class="top-nav quran-text w3-feature">
+         تي أي كيو أب 
     </div>
     <div class="content w3-animate-opacity">
         <div class="w3-container w3-padding">
@@ -38,7 +38,7 @@
     <div class="bottom-nav w3-feature">
         <a href="{{ route('home') }}"><i class="fa-solid fa-house"></i></a>
         <a href="{{ route('search') }}"><i class="fa-solid fa-magnifying-glass"></i></a>
-        <a href=""><i class="fa-solid fa-user"></i></a>
+        <!--a href=""><i class="fa-solid fa-user"></i></a-->
         <a href="{{route('settings')}}"><i class="fa-solid fa-cog"></i></a>
     </div>
 
