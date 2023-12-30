@@ -7,6 +7,7 @@
 - [x] Display of correct and incorrect answers on the result page.
 - [x] Language options available in settings for a multilingual experience.
 - [x] User Preference System implemented.
+- [x] Implement functionality to set daily reminders from the settings.
 
 ## Pending Features and Bug Fixes
 
@@ -21,12 +22,10 @@
     - [ ] Develop and integrate a tagging system for quizzes.
 - [ ] Search functionality:
     - [ ] Enable users to search for quizzes.
-- [ ] Reminder settings:
-    - [ ] Implement functionality to set daily reminders from the settings.
 
 ### Bugs to Fix
 - [ ] Reminder functionality:
-    - [ ] Address the bug causing reminders to not work as intended.
+    - [ ] Investigate and fix any issues with reminder delivery.
 
 ### Code Review and Refinement
 - [ ] Ensure all new features are fully integrated and tested.
