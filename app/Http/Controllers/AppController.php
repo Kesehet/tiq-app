@@ -10,6 +10,7 @@ use App\Models\Option;
 use App\Models\User;
 use App\Models\Question;
 use App\Models\Language;
+use App\Models\UserPreference;
 use Illuminate\Support\Facades\DB;
 
 class AppController extends Controller
@@ -120,12 +121,15 @@ class AppController extends Controller
 
 
     public function settings(){
-        $languages = Language::all(); // Assuming you have a Language model
+        $languages = Language::all(); 
+        $prefferedLanguage = UserPreference::where('user_id', auth()->user()->id)->where('key', 'language')->get()->first();
+
         $user = auth()->user();
 
         return view('app.index', [
             'showPage' => 'settings',
             'languages' => $languages,
+            'prefferedLanguage' => $prefferedLanguage,
             'user' => $user
         ]);
     }
@@ -142,7 +146,7 @@ class AppController extends Controller
             );
         }
 
-        return back()->with('success', 'Preferences updated successfully.');
+        return response()->json(['success' => 'Preferences updated successfully.']);
     }
 
 }

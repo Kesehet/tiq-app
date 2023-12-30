@@ -14,12 +14,12 @@
 
 
 
-<div class=" w3-col m6 l6 s12 w3-margin-bottom w3-border-bottom w3-padding">
+<div class=" w3-col m6 l6 s12 w3-margin-bottom w3-round w3-border-bottom w3-padding w3-hover-light-grey">
     <div class="w3-col m8 l8 s8 w3-animate-left" style="font-weight: bold;text-align: left;" >Language</div>
     <div class="w3-col m4 l4 s4 w3-animate-right">
-            <select id="language" class="w3-select w3-border" onchange="saveSettings()" name="language">
+            <select id="language" class="w3-select w3-border-bottom w3-round" onchange="saveSettings()" name="language">
                 @foreach ($languages as $language)
-                    <option value="{{ $language->id }}" {{ $user->language_id == $language->id ? 'selected' : '' }}>
+                    <option value="{{ $language->id }}" {{ $prefferedLanguage->value == $language->id ? 'selected' : '' }}>
                         {{ $language->name }}
                     </option>
                 @endforeach
