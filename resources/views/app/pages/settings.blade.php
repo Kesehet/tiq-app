@@ -27,30 +27,44 @@
     </div>
 </div>
 
+<!-- Reminder Time Setting -->
+<div class="w3-col m6 l6 s12 w3-margin-bottom w3-round w3-border-bottom w3-padding w3-hover-light-grey">
+    <div class="w3-col m8 l8 s8 w3-animate-left" style="font-weight: bold;text-align: left;">Reminder Time</div>
+    <div class="w3-col m4 l4 s4 w3-animate-right">
+        <input type="time" id="reminder_time" class="w3-input w3-border-bottom w3-round" name="reminder_time" value="{{ $reminderTime->value ?? '' }}" onchange="saveSettings()">
+    </div>
+</div>
+
+
 
 
 <script>
-    function saveSettings() {
-        var languageId = document.getElementById('language').value;
-        // AJAX call to save preferences
-        // Example using fetch:
-        fetch("{{ route('settings.save') }}", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: JSON.stringify({language: languageId})
+function saveSettings() {
+    var languageId = document.getElementById('language').value;
+    var reminderTime = document.getElementById('reminder_time').value;
+    // AJAX call to save preferences
+    // Example using fetch:
+    fetch("{{ route('settings.save') }}", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({
+            language: languageId,
+            reminder_time: reminderTime // Send this new setting to the server
         })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data);
-            // Handle success
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-            // Handle errors
-        });
-    }
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+        // Handle success
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+        // Handle errors
+    });
+}
+
 
 </script>

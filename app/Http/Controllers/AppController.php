@@ -123,13 +123,16 @@ class AppController extends Controller
     public function settings(){
         $languages = Language::all(); 
         $prefferedLanguage = UserPreference::where('user_id', auth()->user()->id)->where('key', 'language')->get()->first();
-
+        $reminderTime = UserPreference::where('user_id', auth()->user()->id)
+            ->where('key', 'reminder_time')
+            ->first();
         $user = auth()->user();
 
         return view('app.index', [
             'showPage' => 'settings',
             'languages' => $languages,
             'prefferedLanguage' => $prefferedLanguage,
+            'reminderTime' => $reminderTime, // Add this line
             'user' => $user
         ]);
     }
@@ -137,16 +140,16 @@ class AppController extends Controller
     public function savePreferences(Request $request)
     {
         $user = Auth::user();
-        $data = $request->only(['language']); // Extend this based on the preferences you allow to be set
-
+        $data = $request->only(['language', 'reminder_time']); // Add 'reminder_time' here
+    
         foreach ($data as $key => $value) {
             UserPreference::updateOrCreate(
                 ['user_id' => $user->id, 'key' => $key],
                 ['value' => $value]
             );
         }
-
+    
         return response()->json(['success' => 'Preferences updated successfully.']);
     }
-
+    
 }
