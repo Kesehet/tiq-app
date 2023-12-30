@@ -43,3 +43,5 @@ Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashb
 
 // APIs 
 Route::post('/api/submit-quiz/{id}', [QuizController::class, 'submit'])->name('submit-quiz');
+Route::post('/settings', [AppController::class, 'savePreferences'])->name('settings.save');
+

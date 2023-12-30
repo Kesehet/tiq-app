@@ -31,8 +31,26 @@
 
 <script>
     function saveSettings() {
-        // JavaScript to handle saving settings
         var languageId = document.getElementById('language').value;
-        // Perform AJAX request to save the selected language for the user
+        // AJAX call to save preferences
+        // Example using fetch:
+        fetch("{{ route('settings.save') }}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify({language: languageId})
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            // Handle success
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            // Handle errors
+        });
     }
+
 </script>

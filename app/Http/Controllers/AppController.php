@@ -129,4 +129,20 @@ class AppController extends Controller
             'user' => $user
         ]);
     }
+
+    public function savePreferences(Request $request)
+    {
+        $user = Auth::user();
+        $data = $request->only(['language']); // Extend this based on the preferences you allow to be set
+
+        foreach ($data as $key => $value) {
+            UserPreference::updateOrCreate(
+                ['user_id' => $user->id, 'key' => $key],
+                ['value' => $value]
+            );
+        }
+
+        return back()->with('success', 'Preferences updated successfully.');
+    }
+
 }

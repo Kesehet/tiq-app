@@ -52,4 +52,10 @@ class User extends Authenticatable
         return $this->belongsTo(Language::class);
     }
 
+    public function preferences()
+    {
+        return $this->hasMany(UserPreference::class);
+    }
+
+
 }
