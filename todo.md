@@ -9,8 +9,8 @@
 ## Pending Features and Bug Fixes
 
 ### Features to Implement
-- [ ] Dashboard completion:
-    - [ ] Finalize and refine the user dashboard.
+- [x] Dashboard completion:
+    - [x] Finalize and refine the user dashboard.
 - [ ] Reminder settings:
     - [ ] Implement functionality to set daily reminders from the settings.
 - [ ] Tagging system:
@@ -19,7 +19,7 @@
     - [ ] Enable users to search for quizzes.
     
 - [ ] Implementation of Quran-like Arabic font for relevant sections.
-- [ ] Language options available in settings for a multilingual experience.
+- [x] Language options available in settings for a multilingual experience.
 
 ### Bugs to Fix
 - [ ] Reminder functionality:
