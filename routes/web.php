@@ -32,6 +32,7 @@ Route::get('/home', [AppController::class, 'home'])->name('home');
 Route::get('/settings', [AppController::class, 'settings'])->name('settings');
 Route::get('/quiz/{id}', [AppController::class, 'quiz'])->name('quiz');
 Route::get('/quiz-results/{quizId}', [AppController::class, 'quizResult'])->name('quiz-results');
+Route::get('/search', [AppController::class, 'search'])->name('search');
 
 
 

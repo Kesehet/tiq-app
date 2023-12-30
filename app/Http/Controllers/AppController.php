@@ -164,6 +164,19 @@ class AppController extends Controller
     
         return response()->json(['success' => 'Preferences updated successfully.']);
     }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        // Perform search logic, e.g., using Eloquent or a search package
+        $quizzes = Quiz::where('title', 'like', '%' . $query . '%')->get();
+
+        return view('app.index', [
+            'showPage' => 'search',
+            'quizzes' => $quizzes
+        ]);
+    }
+
     
     
 }
