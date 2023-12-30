@@ -31,7 +31,7 @@
 <div class="w3-col m6 l6 s12 w3-margin-bottom w3-round w3-border-bottom w3-padding w3-hover-light-grey">
     <div class="w3-col m8 l8 s8 w3-animate-left" style="font-weight: bold;text-align: left;">Enable Reminder</div>
     <div class="w3-col m4 l4 s4 w3-animate-right">
-        <input class="w3-check" type="checkbox" id="reminder_toggle" name="reminder_toggle" {{ $reminderEnabled ? 'checked' : '' }} onchange="toggleReminderSetting()">
+        <input class="w3-check" type="checkbox" id="reminder_toggle" name="reminder_toggle" {{ $reminderEnabled ? 'checked' : '' }} onchange="toggleReminderSetting();saveSettings()">
     </div>
 </div>
 
@@ -39,7 +39,7 @@
 <div class="w3-col m6 l6 s12 w3-margin-bottom w3-round w3-border-bottom w3-padding w3-hover-light-grey" id="reminder_time_setting" style="{{ $reminderEnabled ? '' : 'display: none;' }}">
     <div class="w3-col m8 l8 s8 w3-animate-left" style="font-weight: bold;text-align: left;">Reminder Time</div>
     <div class="w3-col m4 l4 s4 w3-animate-right">
-        <input type="time" id="reminder_time" class="w3-input w3-border-bottom w3-round" name="reminder_time" value="{{ $reminderTime->value ?? '' }}" onchange="saveSettings()">
+        <input type="time" id="reminder_time" class="w3-input w3-border-bottom w3-round" name="reminder_time" value="{{ $reminderTime }}" onchange="saveSettings()">
     </div>
 </div>
 
@@ -53,6 +53,9 @@ function saveSettings() {
     var reminderToggle = document.getElementById('reminder_toggle').checked;
     var reminderTime = reminderToggle ? document.getElementById('reminder_time').value : '';
 
+    if(reminderTime=="" || reminderTime==null){
+        reminderTime = "00:00";
+    }
     // AJAX call to save preferences
     // Example using fetch:
     fetch("{{ route('settings.save') }}", {

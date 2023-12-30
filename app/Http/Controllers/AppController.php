@@ -123,18 +123,27 @@ class AppController extends Controller
     public function settings(){
         $languages = Language::all(); 
         $prefferedLanguage = UserPreference::where('user_id', auth()->user()->id)->where('key', 'language')->get()->first();
-        $reminderTime = UserPreference::where('user_id', auth()->user()->id)
-            ->where('key', 'reminder_time')
-            ->first();
+        $reminderTime = $this->getUserPreference('reminder_time');
+        $reminderEnabled = $this->getUserPreference('reminder_enabled');
         $user = auth()->user();
 
         return view('app.index', [
             'showPage' => 'settings',
             'languages' => $languages,
             'prefferedLanguage' => $prefferedLanguage,
-            'reminderTime' => $reminderTime, // Add this line
+            'reminderTime' => $reminderTime,
+            'reminderEnabled' => $reminderEnabled,
             'user' => $user
         ]);
+    }
+
+    private function getUserPreference($key){
+        $user = Auth::user();
+        $preference = UserPreference::where('user_id', $user->id)->where('key', $key)->first();
+        if ($preference) {
+            return $preference->value;
+        }
+        return null;
     }
 
     public function savePreferences(Request $request)
