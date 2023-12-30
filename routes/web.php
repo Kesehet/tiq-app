@@ -44,4 +44,7 @@ Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashb
 // APIs 
 Route::post('/api/submit-quiz/{id}', [QuizController::class, 'submit'])->name('submit-quiz');
 Route::post('/settings', [AppController::class, 'savePreferences'])->name('settings.save');
+Route::post('/quizzes/{quiz}/tags', [QuizController::class, 'addTagToQuiz'])->name('quizzes.addTag');
+Route::delete('/quizzes/{quiz}/tags/{tag}', [QuizController::class, 'removeTagFromQuiz'])->name('quizzes.removeTag');
+Route::get('/tags/{tag}/quizzes', [QuizController::class, 'getQuizzesByTag'])->name('tags.quizzes');
 

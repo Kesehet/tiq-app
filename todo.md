@@ -18,8 +18,8 @@
     - [ ] Ensure fallback fonts are set.
     - [ ] Check the performance impact of using the new font.
     - [ ] Collect user feedback on the font's appearance and readability.
-- [ ] Tagging system:
-    - [ ] Develop and integrate a tagging system for quizzes.
+- [x] Tagging system:
+    - [x] Develop and integrate a tagging system for quizzes.
 - [ ] Search functionality:
     - [ ] Develop and implement search functionality for quizzes.
 

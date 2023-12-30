@@ -51,6 +51,29 @@ class QuizController extends Controller
         return response()->json(['success' => 'Quiz submitted successfully.']);
     }
 
+    public function addTagToQuiz(Request $request, Quiz $quiz)
+    {
+        $tag = Tag::firstOrCreate(['name' => $request->name, 'slug' => Str::slug($request->name)]);
+        $quiz->tags()->attach($tag->id);
+
+        return back()->with('success', 'Tag added successfully.');
+    }
+
+    public function removeTagFromQuiz(Quiz $quiz, Tag $tag)
+    {
+        $quiz->tags()->detach($tag->id);
+
+        return back()->with('success', 'Tag removed successfully.');
+    }
+
+    public function getQuizzesByTag(Tag $tag)
+    {
+        $quizzes = $tag->quizzes()->get();
+
+        return view('quizzes.index', compact('quizzes'));
+    }
+
+
 
 
     

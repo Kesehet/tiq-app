@@ -38,6 +38,14 @@ class Quiz extends Model
     {
         return self::with(['questions.translations', 'questions.options.translationOptions'])->find($quizId);
     }
+
+    
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'quiz_tag');
+    }
+
+
 }
 
 
