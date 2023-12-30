@@ -140,9 +140,13 @@ class AppController extends Controller
     public function savePreferences(Request $request)
     {
         $user = Auth::user();
-        $data = $request->only(['language', 'reminder_time']); // Add 'reminder_time' here
+        $data = $request->only(['language', 'reminder_enabled', 'reminder_time']);
     
         foreach ($data as $key => $value) {
+            if ($key == 'reminder_enabled' && !$value) {
+                $value = '0'; // Store as '0' if the reminder is disabled
+            }
+    
             UserPreference::updateOrCreate(
                 ['user_id' => $user->id, 'key' => $key],
                 ['value' => $value]
@@ -151,5 +155,6 @@ class AppController extends Controller
     
         return response()->json(['success' => 'Preferences updated successfully.']);
     }
+    
     
 }

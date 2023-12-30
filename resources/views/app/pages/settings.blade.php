@@ -27,8 +27,16 @@
     </div>
 </div>
 
-<!-- Reminder Time Setting -->
+<!-- Reminder Toggle Setting -->
 <div class="w3-col m6 l6 s12 w3-margin-bottom w3-round w3-border-bottom w3-padding w3-hover-light-grey">
+    <div class="w3-col m8 l8 s8 w3-animate-left" style="font-weight: bold;text-align: left;">Enable Reminder</div>
+    <div class="w3-col m4 l4 s4 w3-animate-right">
+        <input class="w3-check" type="checkbox" id="reminder_toggle" name="reminder_toggle" {{ $reminderEnabled ? 'checked' : '' }} onchange="toggleReminderSetting()">
+    </div>
+</div>
+
+<!-- Reminder Time Setting -->
+<div class="w3-col m6 l6 s12 w3-margin-bottom w3-round w3-border-bottom w3-padding w3-hover-light-grey" id="reminder_time_setting" style="{{ $reminderEnabled ? '' : 'display: none;' }}">
     <div class="w3-col m8 l8 s8 w3-animate-left" style="font-weight: bold;text-align: left;">Reminder Time</div>
     <div class="w3-col m4 l4 s4 w3-animate-right">
         <input type="time" id="reminder_time" class="w3-input w3-border-bottom w3-round" name="reminder_time" value="{{ $reminderTime->value ?? '' }}" onchange="saveSettings()">
@@ -38,10 +46,13 @@
 
 
 
+
 <script>
 function saveSettings() {
     var languageId = document.getElementById('language').value;
-    var reminderTime = document.getElementById('reminder_time').value;
+    var reminderToggle = document.getElementById('reminder_toggle').checked;
+    var reminderTime = reminderToggle ? document.getElementById('reminder_time').value : '';
+
     // AJAX call to save preferences
     // Example using fetch:
     fetch("{{ route('settings.save') }}", {
@@ -52,18 +63,24 @@ function saveSettings() {
         },
         body: JSON.stringify({
             language: languageId,
-            reminder_time: reminderTime // Send this new setting to the server
+            reminder_enabled: reminderToggle,
+            reminder_time: reminderTime // Send this new setting to the server only if the toggle is enabled
         })
     })
     .then(response => response.json())
     .then(data => {
         console.log('Success:', data);
-        // Handle success
+        // Handle success, such as updating UI or showing a message
     })
     .catch((error) => {
         console.error('Error:', error);
-        // Handle errors
+        // Handle errors, such as showing an error message
     });
+}
+
+function toggleReminderSetting() {
+    var reminderToggle = document.getElementById('reminder_toggle').checked;
+    document.getElementById('reminder_time_setting').style.display = reminderToggle ? '' : 'none';
 }
 
 
