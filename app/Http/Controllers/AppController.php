@@ -9,6 +9,7 @@ use App\Models\Answer;
 use App\Models\Option;
 use App\Models\User;
 use App\Models\Question;
+use App\Models\Language;
 use Illuminate\Support\Facades\DB;
 
 class AppController extends Controller
@@ -119,9 +120,13 @@ class AppController extends Controller
 
 
     public function settings(){
+        $languages = Language::all(); // Assuming you have a Language model
+        $user = auth()->user();
 
         return view('app.index', [
             'showPage' => 'settings',
+            'languages' => $languages,
+            'user' => $user
         ]);
     }
 }

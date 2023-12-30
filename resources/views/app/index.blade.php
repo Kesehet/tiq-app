@@ -129,7 +129,7 @@
         <a href="{{ route('home') }}"><i class="fa-solid fa-house"></i></a>
         <a href="#"><i class="fa-solid fa-magnifying-glass"></i></a>
         <a href="#"><i class="fa-solid fa-user"></i></a>
-        <a href="#"><i class="fa-solid fa-cog"></i></a>
+        <a href="{{route('settings')}}"><i class="fa-solid fa-cog"></i></a>
     </div>
 
     <script>

@@ -29,6 +29,7 @@ Route::get('auth/google/callback', [LoginController::class, 'handleGoogleCallbac
 
 Route::get('/post-login', [AppController::class, 'postLoginRedirect'])->name('post-login');
 Route::get('/home', [AppController::class, 'home'])->name('home');
+Route::get('/settings', [AppController::class, 'settings'])->name('settings');
 Route::get('/quiz/{id}', [AppController::class, 'quiz'])->name('quiz');
 Route::get('/quiz-results/{quizId}', [AppController::class, 'quizResult'])->name('quiz-results');
 
