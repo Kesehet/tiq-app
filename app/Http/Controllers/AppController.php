@@ -173,6 +173,7 @@ class AppController extends Controller
 
         return view('app.index', [
             'showPage' => 'search',
+            'query' => $query,
             'quizzes' => $quizzes
         ]);
     }

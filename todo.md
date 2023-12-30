@@ -20,8 +20,8 @@
     - [ ] Collect user feedback on the font's appearance and readability.
 - [x] Tagging system:
     - [x] Develop and integrate a tagging system for quizzes.
-- [ ] Search functionality:
-    - [ ] Develop and implement search functionality for quizzes.
+- [x] Search functionality:
+    - [x] Develop and implement search functionality for quizzes.
 
 ### Code Review and Refinement
 - [ ] Ensure all new features are fully integrated and tested.

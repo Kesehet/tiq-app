@@ -106,7 +106,18 @@ function setQuestion(){
     question.answers.forEach(answer => {
         addOption(answer.translation[ACTIVE_LANGUAGE].translated_text,answer.id);
     });
+
+    // Update the visibility of the Previous button
+    document.getElementById("previous").style.display = question_index > 0 ? "" : "none";
+
+    // Change the Next button to Finish on the last question
+    if (question_index == getQuestions().length - 1) {
+        document.getElementById("next").textContent = "Finish";
+    } else {
+        document.getElementById("next").textContent = "Next";
+    }
 }
+
 
 function nextQuestion(){
     if(question_index < getQuestions().length - 1){
@@ -116,6 +127,7 @@ function nextQuestion(){
         finishQuiz();
     }    
 }
+
 
 function setLanguage(language){
     ACTIVE_LANGUAGE = language;
@@ -130,14 +142,13 @@ function previousQuestion(){
 }
 
 function finishQuiz(){
-    if(question_index == getQuestions().length-1){
-        clearOptions();
-        document.getElementById("question").innerHTML = "Quiz Finished.";
-        document.getElementById("next").style.display = "none";
-        document.getElementById("previous").style.display = "none";
-        submitAnswers();
-    }
+    clearOptions();
+    document.getElementById("question").innerHTML = "Quiz Finished.";
+    document.getElementById("next").style.display = "none";
+    document.getElementById("previous").style.display = "none";
+    submitAnswers();
 }
+
 
 function submitAnswers() {
     fetch(BASE_URL+'/api/submit-quiz/'+QUIZ.id, {
