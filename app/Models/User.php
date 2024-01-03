@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use UserPreferences;
 
 class User extends Authenticatable
 {
@@ -21,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role', 
     ];
 
     /**
@@ -44,12 +46,22 @@ class User extends Authenticatable
 
     public function isTeamMember()
     {
-        return false;
+        return !($this->role === 'user');
     }
 
     public function language()
     {
-        return $this->belongsTo(Language::class);
+        $ret = $this->belongsTo(Language::class);
+        if ($ret != null) {
+            return $this->belongsTo(Language::class);
+        }
+        $preff = UserPreference::where('user_id', $this->id)->where('key', 'language')->get()->first();
+        if ($preff) {
+            $this->language = Language::find($preff->value);
+            $this->save();
+            return  $this->language;
+        }
+        return null;
     }
 
     public function preferences()

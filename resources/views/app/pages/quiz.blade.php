@@ -23,7 +23,16 @@
     function startQuiz() {
         document.getElementById('quizSection').style.display = 'block';
         document.getElementById('title-screen').style.display = 'none';
+        document.getElementById('quizSection').style.width = "100vw";
+        document.getElementsByClassName("content")[0].style.display = "flex";
+        document.getElementsByClassName("content")[0].style.justifyContent = "center";
+        document.getElementsByClassName("content")[0].style.alignContent = "center";
+        document.getElementsByClassName("content")[0].style.flexWrap = "wrap";
+        document.getElementsByClassName("content")[0].style.alignItems = "center";
+
     }
+
+
 
     let currentQuestionIndex = 0;
     const QUIZ = {!! json_encode($quiz->readQuizWithQuestionsAndTranslations($quiz->id)) !!};

@@ -46,10 +46,11 @@ class AppController extends Controller
 
     public function quiz($id)
     {
-
+        $the_quiz = Quiz::find($id);
+        
         return view('app.index', [
             'showPage' => 'quiz',
-            'quiz' => Quiz::find($id),
+            'quiz' =>  $the_quiz,
         ]);
     }
 

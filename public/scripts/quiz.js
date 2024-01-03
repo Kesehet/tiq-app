@@ -64,9 +64,9 @@ function processOptions(options){
 }
  
 
-function addOption(text,id){
+function addOption(text,id,is_correct){
     var parentElement = document.getElementById("option_holder");
-    parentElement.innerHTML += getOptionBox(text,id);
+    parentElement.innerHTML += getOptionBox(text,id,is_correct);
 }
 
 function clearOptions(){
@@ -75,9 +75,11 @@ function clearOptions(){
 }
 
 
-function getOptionBox(text,id){
+function getOptionBox(text,id,is_correct){
+    console.log(is_correct);
+    color = is_correct == 1 ? "w3-green" : "w3-grey";
     return `
-        <li id="${id}" name="${id}" class="w3-hover-light-grey" onclick="addAnswerToList('${id}')">${text}</li>
+        <li id="${id}" name="${id}" class="w3-hover-${color}" onclick="addAnswerToList('${id}')">${text}</li>
     `;
 }
 
@@ -104,7 +106,7 @@ function setQuestion(){
     var question = getQuestions()[question_index];
     document.getElementById("question").innerHTML = question.translations[ACTIVE_LANGUAGE].translated_text;
     question.answers.forEach(answer => {
-        addOption(answer.translation[ACTIVE_LANGUAGE].translated_text,answer.id);
+        addOption(answer.translation[ACTIVE_LANGUAGE].translated_text,answer.id,answer.is_correct);
     });
 
     // Update the visibility of the Previous button

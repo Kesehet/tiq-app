@@ -23,7 +23,7 @@
     </script>
 </head>
 <body>
-    <div class="top-nav quran-text w3-feature">
+    <div class="top-nav quran-text w3-feature" style="width:100vw;">
          تي أي كيو أب 
     </div>
     <div class="content w3-animate-opacity">
