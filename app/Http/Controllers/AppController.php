@@ -12,6 +12,7 @@ use App\Models\Question;
 use App\Models\Language;
 use App\Models\UserPreference;
 use Illuminate\Support\Facades\DB;
+use App\Models\QuizPreference;
 
 class AppController extends Controller
 {
@@ -47,10 +48,26 @@ class AppController extends Controller
     public function quiz($id)
     {
         $the_quiz = Quiz::find($id);
-        
+        $showAnswers = QuizPreference::where('quiz_id', $id)->where('key', 'showAnswers')->get();
+        if($showAnswers != null && $showAnswers->count() > 0) {
+            $showAnswers = $showAnswers->value;
+        }
+        $quizContent = Quiz::readQuizWithQuestionsAndTranslations($the_quiz->id);
+        for($index = 0; $index < count($quizContent['questions']); $index++) {
+            for($bindex = 0; count($quizContent['questions'][$index]['options']); $bindex++){
+                if($showAnswers == 0){
+                    $quizContent['questions'][$index]['options'][$bindex]['is_correct'] = -1;
+                }
+                
+            }
+        }
+
+        dd(json_encode($quizContent));
+
         return view('app.index', [
             'showPage' => 'quiz',
             'quiz' =>  $the_quiz,
+            'quizContent' => json_encode($quizContent)
         ]);
     }
 

@@ -35,7 +35,7 @@
 
 
     let currentQuestionIndex = 0;
-    const QUIZ = {!! json_encode($quiz->readQuizWithQuestionsAndTranslations($quiz->id)) !!};
+    const QUIZ = {!! $quizContent !!};
     var ACTIVE_LANGUAGE = "default";
 </script>
 
