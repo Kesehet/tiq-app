@@ -49,7 +49,7 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function quizzesCreate(){
+    public function quizCreate(){
         $user = Auth::user();
         if(!$user->isTeamMember()) {
             return redirect()->route('home');
@@ -59,5 +59,36 @@ class DashboardController extends Controller
             'showPage' => 'quizCreate'
         ]);
     }
+
+
+
+    public function quizStore(Request $request){
+        $user = Auth::user();
+        if(!$user->isTeamMember()) {
+            return redirect()->route('home');
+        }
+
+        
+        $data = $request->validate([
+            'title' => 'required|max:255',
+            'description' => 'required',
+            'questions' => 'required|array',
+            'questions.*.text' => 'required|string',
+            'questions.*.options' => 'required|array',
+            'questions.*.options.*' => 'required|string',
+        ]);
+
+        $quiz = Quiz::create($data);
+
+        foreach ($data['questions'] as $questionData) {
+            $question = $quiz->questions()->create(['text' => $questionData['text']]);
+            foreach ($questionData['options'] as $optionText) {
+                $question->options()->create(['text' => $optionText]);
+            }
+        }
+
+        return redirect()->route('dashboard');
+    }
+
 
 }

@@ -41,6 +41,8 @@ Route::get('/quizzes', [DashboardController::class, 'quizzes'])->name('dashboard
 Route::get('/quizzes/create', [DashboardController::class, 'quizCreate'])->name('dashboard.quiz.create');
 
 
+Route::post('/quizzes/store', [DashboardController::class, 'quizStore'])->name('dashboard.quiz.store');
+
 
 
 

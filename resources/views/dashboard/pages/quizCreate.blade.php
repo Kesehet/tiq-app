@@ -1,0 +1,54 @@
+
+<div class="w3-container">
+    <h2>Create Quiz</h2>
+
+    <form class="w3-container w3-card-4 w3-padding" action="{{ route('dashboard.quiz.store') }}" method="POST">
+        @csrf <!-- CSRF token for security -->
+
+        <p>
+            <label>Title</label>
+            <input class="w3-input" type="text" name="title" required>
+        </p>
+        <p>
+            <label>Description</label>
+            <textarea class="w3-input" name="description" required></textarea>
+        </p>
+
+        <div id="questions-container">
+            <!-- Questions will be added here -->
+        </div>
+
+        <p><button type="button" onclick="addQuestion()">Add Question</button></p>
+        <p><button class="w3-button w3-blue" type="submit">Create Quiz</button></p>
+    </form>
+</div>
+
+<script>
+    function addQuestion() {
+        const container = document.getElementById('questions-container');
+        const questionNumber = container.children.length + 1;
+        const questionHtml = `
+            <div class="w3-margin-top">
+                <label>Question ` + questionNumber + `</label>
+                <input class="w3-input" type="text" name="questions[` + questionNumber + `][text]" required>
+                <div id="options-container-` + questionNumber + `">
+                    <!-- Options will be added here -->
+                </div>
+                <button type="button" onclick="addOption(` + questionNumber + `)">Add Option</button>
+            </div>
+        `;
+        container.innerHTML += questionHtml;
+    }
+
+    function addOption(questionNumber) {
+        const container = document.getElementById('options-container-' + questionNumber);
+        const optionNumber = container.children.length + 1;
+        const optionHtml = `
+            <div class="w3-margin-top">
+                <label>Option ` + optionNumber + `</label>
+                <input class="w3-input" type="text" name="questions[` + questionNumber + `][options][` + optionNumber + `]" required>
+            </div>
+        `;
+        container.innerHTML += optionHtml;
+    }
+</script>
