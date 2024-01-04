@@ -27,28 +27,29 @@
     function addQuestion() {
         const container = document.getElementById('questions-container');
         const questionNumber = container.children.length + 1;
-        const questionHtml = `
-            <div class="w3-margin-top">
-                <label>Question ` + questionNumber + `</label>
-                <input class="w3-input" type="text" name="questions[` + questionNumber + `][text]" required>
-                <div id="options-container-` + questionNumber + `">
-                    <!-- Options will be added here -->
-                </div>
-                <button type="button" onclick="addOption(` + questionNumber + `)">Add Option</button>
+        const questionDiv = document.createElement('div');
+        questionDiv.className = 'w3-margin-top';
+        questionDiv.innerHTML = `
+            <label>Question ` + questionNumber + `</label>
+            <input class="w3-input" type="text" name="questions[` + questionNumber + `][text]" required>
+            <div id="options-container-` + questionNumber + `">
+                <!-- Options will be added here -->
             </div>
+            <button type="button" onclick="addOption(` + questionNumber + `)">Add Option</button>
         `;
-        container.innerHTML += questionHtml;
+        container.appendChild(questionDiv);
     }
 
     function addOption(questionNumber) {
         const container = document.getElementById('options-container-' + questionNumber);
         const optionNumber = container.children.length + 1;
-        const optionHtml = `
-            <div class="w3-margin-top">
-                <label>Option ` + optionNumber + `</label>
-                <input class="w3-input" type="text" name="questions[` + questionNumber + `][options][` + optionNumber + `]" required>
-            </div>
+        const optionDiv = document.createElement('div');
+        optionDiv.className = 'w3-margin-top';
+        optionDiv.innerHTML = `
+            <label>Option ` + optionNumber + `</label>
+            <input class="w3-input" type="text" name="questions[` + questionNumber + `][options][` + optionNumber + `]" required>
         `;
-        container.innerHTML += optionHtml;
+        container.appendChild(optionDiv);
     }
+
 </script>
