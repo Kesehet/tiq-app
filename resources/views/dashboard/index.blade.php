@@ -54,7 +54,7 @@
         <div class="w3-bar-block">
             <a href="{{route('dashboard')}}" class="w3-bar-item {{ $showPage === 'home' ? 'w3-feature': ''}} w3-button w3-padding"><i class="fa fa-home fa-fw"></i>  Home</a>
             
-            <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-graduation-cap fa-fw"></i>  Quizzes</a>
+            <a href="{{route('dashboard.quizzes')}}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-graduation-cap fa-fw"></i>  Quizzes</a>
             <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  Traffic</a>
 
             <a href="{{route('home')}}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-mobile fa-fw"></i>  Visit The App</a>

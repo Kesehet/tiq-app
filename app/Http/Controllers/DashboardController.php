@@ -37,4 +37,27 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function quizzes(){
+        $user = Auth::user();
+        if(!$user->isTeamMember()) {
+            return redirect()->route('home');
+        }
+
+        return view('dashboard.index',[
+            'showPage' => 'quizAll',
+            'quizzes' => Quiz::all()
+        ]);
+    }
+
+    public function quizzesCreate(){
+        $user = Auth::user();
+        if(!$user->isTeamMember()) {
+            return redirect()->route('home');
+        }
+
+        return view('dashboard.index',[
+            'showPage' => 'quizCreate'
+        ]);
+    }
+
 }

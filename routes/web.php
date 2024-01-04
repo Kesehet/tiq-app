@@ -37,6 +37,8 @@ Route::get('/search', [AppController::class, 'search'])->name('search');
 
 
 Route::get('/dashboard', [DashboardController::class, 'home'])->name('dashboard');
+Route::get('/quizzes', [DashboardController::class, 'quizzes'])->name('dashboard.quizzes');
+Route::get('/quizzes/create', [DashboardController::class, 'quizCreate'])->name('dashboard.quiz.create');
 
 
 
