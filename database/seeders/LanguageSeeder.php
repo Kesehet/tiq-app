@@ -17,8 +17,8 @@ class LanguageSeeder extends Seeder
     public function run()
     {
         DB::table('languages')->insert([
-            ['name' => 'English', 'code' => 'en'],
-            ['name' => 'Arabic', 'code' => 'ar'],
+            ['name' => 'English', 'code' => 'ENG'],
+            ['name' => 'Arabic', 'code' => 'ARB'],
            
         ]);
     }

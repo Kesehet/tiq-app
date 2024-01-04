@@ -46,7 +46,8 @@ class User extends Authenticatable
 
     public function isTeamMember()
     {
-        return !($this->role === 'user');
+        
+        return $this->role === 'admin' || $this->role === 'team';
     }
 
     public function language()

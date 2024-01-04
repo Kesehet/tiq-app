@@ -36,7 +36,7 @@ Route::get('/search', [AppController::class, 'search'])->name('search');
 
 
 
-Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'home'])->name('dashboard');
 
 
 
