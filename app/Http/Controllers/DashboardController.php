@@ -61,14 +61,9 @@ class DashboardController extends Controller
     }
 
 
-
-    public function quizStore(Request $request){
-        $user = Auth::user();
-        if(!$user->isTeamMember()) {
-            return redirect()->route('home');
-        }
-
-        
+    
+    public function quizStore(Request $request)
+    {
         $data = $request->validate([
             'title' => 'required|max:255',
             'description' => 'required',
@@ -77,18 +72,19 @@ class DashboardController extends Controller
             'questions.*.options' => 'required|array',
             'questions.*.options.*' => 'required|string',
         ]);
-
+    
         $quiz = Quiz::create($data);
-
+    
         foreach ($data['questions'] as $questionData) {
             $question = $quiz->questions()->create(['text' => $questionData['text']]);
             foreach ($questionData['options'] as $optionText) {
                 $question->options()->create(['text' => $optionText]);
             }
         }
-
+    
         return redirect()->route('dashboard');
     }
+    
 
 
 }

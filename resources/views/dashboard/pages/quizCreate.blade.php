@@ -1,8 +1,7 @@
-
 <div class="w3-container">
     <h2>Create Quiz</h2>
 
-    <form class="w3-container w3-card-4 w3-padding" action="{{ route('dashboard.quiz.store') }}" method="POST">
+    <form class="w3-container w3-card-4 w3-padding" action="{{ route('quizzes.store') }}" method="POST">
         @csrf <!-- CSRF token for security -->
 
         <p>
@@ -51,5 +50,5 @@
         `;
         container.appendChild(optionDiv);
     }
-
 </script>
+
