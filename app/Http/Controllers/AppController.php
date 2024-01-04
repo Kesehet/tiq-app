@@ -48,13 +48,26 @@ class AppController extends Controller
     public function quiz($id)
     {
         $the_quiz = Quiz::find($id);
-        $showAnswers = QuizPreference::where('quiz_id', $id)->where('key', 'showAnswers')->get();
+        $showAnswers = QuizPreference::where('quiz_id', $id)->where('key', 'showAnswers')->get()->first();
+
+        $canChangeAnswers = QuizPreference::where('quiz_id', $id)->where('key', 'canChangeAnswers')->get()->first();
+        
+        if($canChangeAnswers != null && $canChangeAnswers->count() > 0) {
+            $canChangeAnswers = $canChangeAnswers->value;
+        }
+
+        if($canChangeAnswers == 0) {
+            return redirect()->route('quiz-results', ['quizId' => $id]);
+        }
+
         if($showAnswers != null && $showAnswers->count() > 0) {
             $showAnswers = $showAnswers->value;
         }
+
+
         $quizContent = Quiz::readQuizWithQuestionsAndTranslations($the_quiz->id);
         for($index = 0; $index < count($quizContent['questions']); $index++) {
-            for($bindex = 0; count($quizContent['questions'][$index]['options']); $bindex++){
+            for($bindex = 0; $bindex < count($quizContent['questions'][$index]['options']); $bindex++){
                 if($showAnswers == 0){
                     $quizContent['questions'][$index]['options'][$bindex]['is_correct'] = -1;
                 }
@@ -62,7 +75,8 @@ class AppController extends Controller
             }
         }
 
-        dd(json_encode($quizContent));
+
+        
 
         return view('app.index', [
             'showPage' => 'quiz',
