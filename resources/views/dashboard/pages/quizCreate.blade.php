@@ -13,8 +13,12 @@
             <textarea class="w3-input" name="description" required></textarea>
         </p>
         <p>
+            <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+            <input type="hidden" name="add_question" value="0">
+        </p>
+        <p>
             <button class="w3-button w3-feature w3-left" type="submit">Create Quiz</button>
-            <button class="w3-button w3-green w3-right " type="submit">Add Questions</button>
+            <button class="w3-button w3-green w3-right"  type="button" onclick="this.form.add_question.value=1;this.form.submit();"><i class="fa fa-plus"></i> Add Questions</button>
         </p>
     </form>
 </div>
