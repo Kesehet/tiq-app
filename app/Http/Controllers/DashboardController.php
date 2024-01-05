@@ -49,41 +49,49 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function quizCreate(){
+
+    public function quizCreate(Request $request){
+        $user = Auth::user();
+        if(!$user->isTeamMember()) {
+            return redirect()->route('home');
+        }
+    
+        $quizzes = null;
+        if ($request->has('q')) {
+            $searchQuery = $request->input('q');
+            // Search for quizzes by name. Adjust the query as per your database and requirements
+            $quizzes = Quiz::where('title', 'LIKE', '%' . $searchQuery . '%')->get();
+        }
+        else {
+            // get latest 50 quizzes
+            $quizzes = Quiz::latest()->take(50)->get();
+        }
+    
+        return view('dashboard.index', [
+            'showPage' => 'quizCreate',
+            'quizzes' => $quizzes // Pass the quizzes to the view
+        ]);
+    }
+
+
+    public function quizStore(Request $request)
+    {
         $user = Auth::user();
         if(!$user->isTeamMember()) {
             return redirect()->route('home');
         }
 
-        return view('dashboard.index',[
-            'showPage' => 'quizCreate'
-        ]);
-    }
-
-
-    
-    public function quizStore(Request $request)
-    {
         $data = $request->validate([
             'title' => 'required|max:255',
             'description' => 'required',
-            'questions' => 'required|array',
-            'questions.*.text' => 'required|string',
-            'questions.*.options' => 'required|array',
-            'questions.*.options.*' => 'required|string',
         ]);
-    
+
         $quiz = Quiz::create($data);
-    
-        foreach ($data['questions'] as $questionData) {
-            $question = $quiz->questions()->create(['text' => $questionData['text']]);
-            foreach ($questionData['options'] as $optionText) {
-                $question->options()->create(['text' => $optionText]);
-            }
-        }
-    
+
+        // Redirect to a specific route (e.g., dashboard) or the newly created quiz
         return redirect()->route('dashboard');
     }
+
     
 
 
