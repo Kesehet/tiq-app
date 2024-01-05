@@ -20,10 +20,13 @@
         // Script to toggle the sidebar on and off
         function toggleSidebar() {
             var mySidebar = document.getElementById("mySidebar");
+            var myoverlay = document.getElementById("myOverlay");
             if (mySidebar.style.display === 'block') {
                 mySidebar.style.display = 'none';
+                myoverlay.style.display = "none";
             } else {
                 mySidebar.style.display = 'block';
+                myoverlay.style.display = "block";
             }
         }
     </script>
@@ -63,7 +66,7 @@
     </nav>
 
     <!-- Overlay effect when opening sidebar on small screens -->
-    <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="toggleSidebar()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+    <div class="w3-overlay w3-animate-opacity" onclick="toggleSidebar()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
     <!-- Main content: shift it to the right by 300 pixels when the sidebar is visible -->
     <div class="w3-main" style="margin-left:300px;margin-top:43px;">
