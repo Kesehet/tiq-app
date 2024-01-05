@@ -37,25 +37,12 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function quizzes(){
+    public function quizzes(Request $request){
         $user = Auth::user();
         if(!$user->isTeamMember()) {
             return redirect()->route('home');
         }
 
-        return view('dashboard.index',[
-            'showPage' => 'quizAll',
-            'quizzes' => Quiz::all()
-        ]);
-    }
-
-
-    public function quizCreate(Request $request){
-        $user = Auth::user();
-        if(!$user->isTeamMember()) {
-            return redirect()->route('home');
-        }
-    
         $quizzes = null;
         if ($request->has('q')) {
             $searchQuery = $request->input('q');
@@ -66,10 +53,23 @@ class DashboardController extends Controller
             // get latest 50 quizzes
             $quizzes = Quiz::latest()->take(50)->get();
         }
+
+        return view('dashboard.index',[
+            'showPage' => 'quizAll',
+            'quizzes' => $quizzes
+        ]);
+    }
+
+
+    public function quizCreate(Request $request){
+        $user = Auth::user();
+        if(!$user->isTeamMember()) {
+            return redirect()->route('home');
+        }
+    
     
         return view('dashboard.index', [
             'showPage' => 'quizCreate',
-            'quizzes' => $quizzes // Pass the quizzes to the view
         ]);
     }
 
