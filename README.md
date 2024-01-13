@@ -32,8 +32,6 @@ php artisan migrate
 # Seed the database
 php artisan db:seed
 
-# Serve the application
-php artisan serve
 
 ## Acknowledgments
 - [Laravel](https://laravel.com) - The web framework used
