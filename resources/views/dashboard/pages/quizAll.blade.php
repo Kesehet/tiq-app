@@ -10,7 +10,7 @@
             <input class="w3-input w3-border" type="text" placeholder="Search for quizzes..." name="q">
         </div>
         <div class="w3-col s4 m2 l2">
-            <button  class="w3-button w3-block w3-feature" type="button">Search</button>
+            <button  class="w3-button w3-block w3-feature" type="submit" >Search</button>
         </div>
     </form>
 
@@ -25,8 +25,6 @@
                     </header>
                     <div class="w3-container">
                         <p>{{ $quiz->description }}</p>
-                        <hr>
-                        
                     </div>
                 </div>
             </div>
@@ -34,8 +32,3 @@
     </div>
 </div>
 
-<script>
-    function confirmDelete(quizId) {
-        // Implement delete confirmation logic here
-    }
-</script>

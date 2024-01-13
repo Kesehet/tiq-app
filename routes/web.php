@@ -39,10 +39,12 @@ Route::get('/search', [AppController::class, 'search'])->name('search');
 Route::get('/dashboard', [DashboardController::class, 'home'])->name('dashboard');
 Route::get('/quizzes', [DashboardController::class, 'quizzes'])->name('dashboard.quizzes');
 Route::get('/quizzes/create', [DashboardController::class, 'quizCreate'])->name('dashboard.quiz.create');
+Route::get('/questions', [DashboardController::class, 'questions'])->name('dashboard.questions');
+Route::get('/questions/create', [DashboardController::class, 'questionCreate'])->name('dashboard.question.create');
 
 
 Route::post('/quizzes/store', [DashboardController::class, 'quizStore'])->name('dashboard.quiz.store');
-
+Route::post('/questions/store', [DashboardController::class, 'questionStore'])->name('dashboard.question.store');
 
 
 
