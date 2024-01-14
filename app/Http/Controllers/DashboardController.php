@@ -29,13 +29,16 @@ class DashboardController extends Controller
             return redirect()->route('home');
         }
 
-
-
-
+        $optionCount = Option::all()->count();
+        $answerCount = Answer::all()->count();
+            
         return view('dashboard.index', [
             'showPage' => 'home',
-            'latestQuizzes' => Quiz::latest()->take(5)->get(),
-        ]);
+            'optionCount' => $optionCount,
+            'answerCount' => $answerCount,
+
+
+                ]);
     }
 
     public function quizzes(Request $request){

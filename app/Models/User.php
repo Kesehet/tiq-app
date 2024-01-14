@@ -50,6 +50,12 @@ class User extends Authenticatable
         return $this->role === 'admin' || $this->role === 'team';
     }
 
+    /**
+     * Retrieves the language associated with the user.
+     *
+     * @throws \Exception if there is an error retrieving the language.
+     * @return \App\Language|null The language associated with the user, or null if not found.
+     */
     public function language()
     {
         $ret = $this->belongsTo(Language::class);
