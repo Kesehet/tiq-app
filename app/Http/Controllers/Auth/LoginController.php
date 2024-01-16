@@ -64,6 +64,7 @@ class LoginController extends Controller
     //     }
     // }
     
+    
     public function handleGoogleCallback(Request $request)
     {
         try {
@@ -74,27 +75,34 @@ class LoginController extends Controller
                 [
                     'name' => $googleUser->getName(),
                     'email' => $googleUser->getEmail(),
-                    'password' => bcrypt($googleUser->getId()),
+                    'google_id' => $googleUser->getId(), // Store Google ID
                 ]
             );
         
-            // Log in the user
             Auth::login($user);
-    
-            $code = $request->input('code');
-            // Redirect to your custom scheme with the token
-            return redirect("tiqapp://login/google/callback?token=$code");
-    
+
+            $token = JWTAuth::fromUser($user); // Generate JWT token
+
+            return redirect("tiqapp://login/google/callback?token=$token");
+
         } catch (\Exception $e) {
-            // Handle exception or failed authentication
             return redirect()->route('login');
         }
     }
 
-    public function exchangeToken(Request $request)
+    public function validateToken(Request $request)
     {
-        $code = $request->code;
-        // Exchange the code for an access token and authenticate the user
+        try {
+            if (!$user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['user_not_found'], 404);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['token_invalid'], $e->getStatusCode());
+        }
+    
+        // Return the user details
+        return response()->json(compact('user'));
     }
+    
     // Additional methods for login logic if needed
 }
