@@ -54,4 +54,4 @@ Route::post('/settings', [AppController::class, 'savePreferences'])->name('setti
 Route::post('/quizzes/{quiz}/tags', [QuizController::class, 'addTagToQuiz'])->name('quizzes.addTag');
 Route::delete('/quizzes/{quiz}/tags/{tag}', [QuizController::class, 'removeTagFromQuiz'])->name('quizzes.removeTag');
 Route::get('/tags/{tag}/quizzes', [QuizController::class, 'getQuizzesByTag'])->name('tags.quizzes');
-
+Route::post('login/google/token', 'Auth\LoginController@exchangeToken');

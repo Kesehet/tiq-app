@@ -59,6 +59,10 @@ class LoginController extends Controller
         }
     }
     
-
+    public function exchangeToken(Request $request)
+    {
+        $code = $request->code;
+        // Exchange the code for an access token and authenticate the user
+    }
     // Additional methods for login logic if needed
 }
