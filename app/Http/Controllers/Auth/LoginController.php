@@ -30,7 +30,7 @@ class LoginController extends Controller
     /**
      * Handle response from Google after authentication.
      */
-    public function handleGoogleCallback()
+    public function handleGoogleCallback(Request $request)
     {
         try {
             $googleUser = Socialite::driver('google')->user();
@@ -51,7 +51,14 @@ class LoginController extends Controller
             Auth::login($user);
     
             // Redirect to a desired location after successful authentication
-            return redirect()->intended('/post-login');
+            //return redirect()->intended('/post-login');
+
+
+            $code = $request->input('code');
+            return redirect("tiqapp://login/google/callback?code=$code");
+
+
+
         } catch (\Exception $e) {
             // Handle exception or failed authentication
             dd($e);
