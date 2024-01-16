@@ -81,10 +81,9 @@ class LoginController extends Controller
             // Log in the user
             Auth::login($user);
     
-            // Generate a token or a success indicator for your mobile app
-            $token = $user->createToken('YourAppToken')->accessToken;
+            $code = $request->input('code');
             // Redirect to your custom scheme with the token
-            return redirect("tiqapp://login/google/callback?token=$token");
+            return redirect("tiqapp://login/google/callback?token=$code");
     
         } catch (\Exception $e) {
             // Handle exception or failed authentication
