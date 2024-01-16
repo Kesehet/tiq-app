@@ -20,26 +20,41 @@ class DashboardController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        
+
     }
     public function home()
     {
         $user = Auth::user();
-        if(!$user->isTeamMember()) {
+        if(!$user->isTeamMember())
+         {
             return redirect()->route('home');
         }
 
-        $optionCount = Option::all()->count();
-        $answerCount = Answer::all()->count();
-            
-        return view('dashboard.index', [
-            'showPage' => 'home',
-            'optionCount' => $optionCount,
-            'answerCount' => $answerCount,
+         {
+         $quizcount = Quiz::all()->count();
+         $questioncount = Question::all()->count();
+
+          $usercount = User::all()->count();
 
 
-                ]);
-    }
+
+
+         return view('dashboard.index',
+         [
+         'showPage'  => 'home',
+         'quizcount' => $quizcount,
+         'questioncount'  => $questioncount,
+         'usercount'     => $usercount,
+
+
+         ]);
+
+
+         }
+
+
+}
+
 
     public function quizzes(Request $request){
         $user = Auth::user();
@@ -70,8 +85,8 @@ class DashboardController extends Controller
         if(!$user->isTeamMember()) {
             return redirect()->route('home');
         }
-    
-    
+
+
         return view('dashboard.index', [
             'showPage' => 'quizCreate',
         ]);
@@ -100,7 +115,7 @@ class DashboardController extends Controller
         return redirect()->route('dashboard.quizzes');
     }
 
-    
+
 
     public function questions(Request $request){
         $user = Auth::user();
@@ -130,20 +145,20 @@ class DashboardController extends Controller
         ]);
     }
 
-    
+
     public function questionCreate(Request $request){
         $user = Auth::user();
         if(!$user->isTeamMember()) {
             return redirect()->route('home');
         }
-        
+
         $quiz = Quiz::find($request->quiz_id);
 
         if($quiz == null) {
-            // get the quiz that was recently added ... 
+            // get the quiz that was recently added ...
             $quiz = Quiz::all()->last();
         }
-    
+
         return view('dashboard.index', [
             'showPage' => 'questionCreate',
             'quiz_selected' => $quiz,
@@ -185,7 +200,7 @@ class DashboardController extends Controller
         return redirect()->route('dashboard.quizzes');
     }
 
-    
+
 
 
 }
