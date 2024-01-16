@@ -34,66 +34,66 @@ class LoginController extends Controller
     /**
      * Handle response from Google after authentication.
      */
-    // public function handleGoogleCallback(Request $request)
-    // {
-    //     //dd($request->all());
-    //     try {
-    //         $googleUser = Socialite::driver('google')->user();
-            
-    
-    //         $user = User::updateOrCreate(
-    //             [
-    //                 'email' => $googleUser->getEmail(),
-    //             ],
-    //             [
-    //             'name' => $googleUser->getName(),
-    //             'email' => $googleUser->getEmail(),
-    //             'password'=>bcrypt($googleUser->getId()),
-    //         ]);
-        
-    
-    //         // Log in the user
-    //         Auth::login($user);
-    
-    //         // Redirect to a desired location after successful authentication
-    //         return redirect()->intended('/post-login');
-
-
-
-
-    //     } catch (\Exception $e) {
-    //         // Handle exception or failed authentication
-            
-    //         return redirect()->route('login');
-    //     }
-    // }
-    
-    
     public function handleGoogleCallback(Request $request)
     {
+        //dd($request->all());
         try {
             $googleUser = Socialite::driver('google')->user();
             
+    
             $user = User::updateOrCreate(
-                ['email' => $googleUser->getEmail()],
                 [
-                    'name' => $googleUser->getName(),
                     'email' => $googleUser->getEmail(),
-                    'google_id' => $googleUser->getId(), // Store Google ID
-                ]
-            );
+                ],
+                [
+                'name' => $googleUser->getName(),
+                'email' => $googleUser->getEmail(),
+                'password'=>bcrypt($googleUser->getId()),
+            ]);
         
+    
+            // Log in the user
             Auth::login($user);
+    
+            // Redirect to a desired location after successful authentication
+            return redirect()->intended('/post-login');
 
-            $token = JWTAuth::fromUser($user); // Generate JWT token
 
-            return redirect("tiqapp://login/google/callback?token=$token");
+
 
         } catch (\Exception $e) {
-            dd($e);
+            // Handle exception or failed authentication
+            
             return redirect()->route('login');
         }
     }
+    
+    
+    // public function handleGoogleCallback(Request $request)
+    // {
+    //     try {
+    //         $googleUser = Socialite::driver('google')->user();
+            
+    //         $user = User::updateOrCreate(
+    //             ['email' => $googleUser->getEmail()],
+    //             [
+    //                 'name' => $googleUser->getName(),
+    //                 'email' => $googleUser->getEmail(),
+    //                 'google_id' => $googleUser->getId(), // Store Google ID
+    //             ]
+    //         );
+        
+    //         Auth::login($user);
+
+    //         $token = JWTAuth::fromUser($user); // Generate JWT token
+
+    //         return redirect("tiqapp://login/google/callback?token=$token");
+
+    //     } catch (\Exception $e) {
+    //         dd($e);
+    //         return redirect()->route('login');
+    //     }
+    // }
 
     public function validateToken(Request $request)
     {
