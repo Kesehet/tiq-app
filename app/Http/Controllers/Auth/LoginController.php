@@ -32,7 +32,7 @@ class LoginController extends Controller
      */
     public function handleGoogleCallback(Request $request)
     {
-        dd($request->all());
+        //dd($request->all());
         try {
             $googleUser = Socialite::driver('google')->user();
             
