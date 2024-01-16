@@ -90,6 +90,7 @@ class LoginController extends Controller
             return redirect("tiqapp://login/google/callback?token=$token");
 
         } catch (\Exception $e) {
+            dd($e);
             return redirect()->route('login');
         }
     }
