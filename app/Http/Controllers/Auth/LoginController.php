@@ -83,7 +83,7 @@ class LoginController extends Controller
     
             // Generate a token or a success indicator for your mobile app
             $token = $user->createToken('YourAppToken')->accessToken;
-            dd(json_encode($token));
+            dd(json_encode($token->accessToken));
             // Redirect to your custom scheme with the token
             return redirect("tiqapp://login/google/callback?token=$token");
     
