@@ -1,1 +1,1 @@
-<a href="tiqapp://login/google/callback?code={{$code}}">Next</a>
+<a href="tiq_app://login/google/callback?code={{$code}}">Next</a>

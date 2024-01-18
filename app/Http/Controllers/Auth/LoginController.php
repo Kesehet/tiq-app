@@ -87,7 +87,7 @@ class LoginController extends Controller
 
     //         $token = JWTAuth::fromUser($user); // Generate JWT token
 
-    //         return redirect("tiqapp://login/google/callback?token=$token");
+    //         return redirect("tiq_app://login/google/callback?token=$token");
 
     //     } catch (\Exception $e) {
     //         dd($e);
