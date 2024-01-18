@@ -56,7 +56,7 @@ class LoginController extends Controller
             Auth::login($user);
     
             // Redirect to a desired location after successful authentication
-            return redirect()->intended('/post-login');
+            return redirect()->intended('/post-login?is_mobile=true&code='.$request->input('code'));
 
 
 
