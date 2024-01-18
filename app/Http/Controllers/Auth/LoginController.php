@@ -50,13 +50,15 @@ class LoginController extends Controller
                 'email' => $googleUser->getEmail(),
                 'password'=>bcrypt($googleUser->getId()),
             ]);
-        
-    
+            
+            $agent = new \Jenssegers\Agent\Agent;
+            $isMobile = $agent->isMobile();
+            $additionalCode = '?is_mobile=true&code='.$request->input('code');
             // Log in the user
             Auth::login($user);
     
             // Redirect to a desired location after successful authentication
-            return redirect()->intended('/post-login?is_mobile=true&code='.$request->input('code'));
+            return redirect()->intended('/post-login' . ($isMobile ? $additionalCode : ""));
 
 
 
