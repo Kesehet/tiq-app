@@ -67,33 +67,7 @@ class LoginController extends Controller
             return redirect()->route('login');
         }
     }
-    
-    
-    // public function handleGoogleCallback(Request $request)
-    // {
-    //     try {
-    //         $googleUser = Socialite::driver('google')->user();
-            
-    //         $user = User::updateOrCreate(
-    //             ['email' => $googleUser->getEmail()],
-    //             [
-    //                 'name' => $googleUser->getName(),
-    //                 'email' => $googleUser->getEmail(),
-    //                 'google_id' => $googleUser->getId(), // Store Google ID
-    //             ]
-    //         );
-        
-    //         Auth::login($user);
 
-    //         $token = JWTAuth::fromUser($user); // Generate JWT token
-
-    //         return redirect("tiq-app://login/google/callback?token=$token");
-
-    //     } catch (\Exception $e) {
-    //         dd($e);
-    //         return redirect()->route('login');
-    //     }
-    // }
 
     public function validateToken(Request $request)
     {
