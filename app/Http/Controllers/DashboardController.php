@@ -35,6 +35,9 @@ class DashboardController extends Controller
          $questioncount = Question::all()->count();
 
           $usercount = User::all()->count();
+          $languagecount = Language::all()->count();
+
+        $recentQuiz = Quiz::latest()->take(5)->get();
 
 
 
@@ -44,7 +47,10 @@ class DashboardController extends Controller
          'showPage'  => 'home',
          'quizcount' => $quizcount,
          'questioncount'  => $questioncount,
-         'usercount'     => $usercount,
+         'languagecount'     => $languagecount,
+          'usercount'   => $usercount,
+           'recentQuiz'=> $recentQuiz,
+
 
 
          ]);
