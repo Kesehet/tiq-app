@@ -178,15 +178,13 @@ class DashboardController extends Controller
         $data = $request->validate([
             'quiz_id' => 'required',
             'question_text' => 'required|max:255',
-            'user_id' => 'required',
-            'add_option' => 'required',
         ]);
 
         $question = Question::create($data);
 
         // add Translations question_text_[Language name]
         foreach(Language::all() as $language) {
-            Translation::createOrUpdate([
+            Translation::create([
                 'question_id' => $question->id,
                 'language_id' => $language->id,
                 'translated_text' => $request->input('question_text_' . $language->id),
@@ -199,6 +197,14 @@ class DashboardController extends Controller
         }
         return redirect()->route('dashboard.quizzes');
     }
+
+    public function combined(){
+
+        return view('dashboard.index',[
+            'showPage' => 'questionCombo',
+        ]);
+    }
+
 
 
 

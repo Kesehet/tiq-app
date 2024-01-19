@@ -42,6 +42,8 @@ Route::get('/quizzes/create', [DashboardController::class, 'quizCreate'])->name(
 Route::get('/questions', [DashboardController::class, 'questions'])->name('dashboard.questions');
 Route::get('/questions/create', [DashboardController::class, 'questionCreate'])->name('dashboard.question.create');
 
+Route::get('/quizzes/combo', [DashboardController::class, 'combined'])->name('dashboard.question.combo');
+
 
 Route::post('/quizzes/store', [DashboardController::class, 'quizStore'])->name('dashboard.quiz.store');
 Route::post('/questions/store', [DashboardController::class, 'questionStore'])->name('dashboard.question.store');
@@ -54,6 +56,9 @@ Route::post('/settings', [AppController::class, 'savePreferences'])->name('setti
 Route::post('/quizzes/{quiz}/tags', [QuizController::class, 'addTagToQuiz'])->name('quizzes.addTag');
 Route::delete('/quizzes/{quiz}/tags/{tag}', [QuizController::class, 'removeTagFromQuiz'])->name('quizzes.removeTag');
 Route::get('/tags/{tag}/quizzes', [QuizController::class, 'getQuizzesByTag'])->name('tags.quizzes');
+
+// Dashboard APIs 
+
 Route::post('api/validate-token', [LoginController::class, 'validateToken']);
 
 
