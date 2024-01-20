@@ -13,7 +13,11 @@
         <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
         <div class="w3-row w3-padding">
             <label for="quiz_name">Quiz Name</label>
-            <input type="text" class="w3-input" name="quiz_name" value="" placeholder="Please enter the name of the Quiz">
+            <input type="text" id="quiz_name" class="w3-input" name="quiz_name" value="" placeholder="Please enter the name of the Quiz">
+        </div>
+        <div class="w3-row w3-padding">
+            <label for="quiz_name">Quiz Description</label>
+            <input type="text" id="quiz_description" class="w3-input" name="quiz_description" value="" placeholder="Please enter the description of the Quiz">
         </div>
     </div>
 
@@ -34,34 +38,22 @@
 </div>
 
 
-
-
-
-
 <script>
 
+    
 
+    var QUIZ = {
+        name: () => document.getElementById("quiz_name").value,
+        description: () => getEditorData("quiz_description"),
+        questions : []
+    };
 
-    var FORM = {};
 
 
 
     var QuizForm = document.getElementsByClassName("quiz")[0];
     QuizForm.addEventListener("submit", function (e) {
         e.preventDefault();
-        inputs = QuizForm.getElementsByTagName("input");
-        var data = {};
-        for (var i = 0; i < inputs.length; i++) {
-            data[inputs[i].name] = inputs[i].value;
-        }
-        fetch('{{ route('dashboard.quiz.store') }}', {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]'),
-            },
-            body: JSON.stringify(data),
-        })
     });
 
     function addQuestion(that){
@@ -70,9 +62,26 @@
 
     LANGUAGES = @json($languages);
     EDITORS = {};
+    EDITORS["quiz_description"] = CKEDITOR.replace("quiz_description");
 
     function questionBox(mainContainer){
         let r = (Math.random() + 1).toString(36).substring(7);
+        QUIZ.questions.push({
+            "id": r,
+            "text": () => getEditorData(`${r}_question_text`),
+            "languages": ()=>{
+                for(var i = 0; i < LANGUAGES.length; i++){
+                    let lang = LANGUAGES[i];
+                    var ret = [];
+                    if(document.getElementById(`${r}_question_text_${lang.id}`)){
+                        lang.text = ()=>document.getElementById(`${r}_question_text_${lang.id}`).value;
+                        ret.push(lang);
+                    }
+                }
+                return ret;
+            },
+            "options":[]
+        });
 
         let questionDiv = document.createElement("div");
         questionDiv.id = `${r}_box`;
@@ -80,6 +89,10 @@
 
         let questionInputContainer = document.createElement("div");
         questionInputContainer.className = "w3-row w3-padding";
+
+        let questionLabel = document.createElement("label");
+        questionLabel.for = `${r}_question_text`;
+        questionLabel.textContent = "Question";
 
         
 
@@ -93,6 +106,7 @@
             document.getElementById(`${r}_question_text_display`).innerHTML = getEditorData(`${r}_question_text`);          
         }
 
+        questionInputContainer.appendChild(questionLabel);
         questionInputContainer.appendChild(questionInput);
         questionDiv.appendChild(questionInputContainer);
 
@@ -141,6 +155,7 @@
         deleteButton.onclick = function(){
             document.getElementById(`${r}_box`).remove();
             document.getElementById(`${r}_display_all`).style.display = "none";
+            deleteQuestionFromQuiz(r);
         }
 
         questionDiv.appendChild(deleteButton);
@@ -232,10 +247,36 @@
 
 
     function optionBox(question_r){
+
+        let r = (Math.random() + 1).toString(36).substring(7);
+
+
+        getQuestionFromQuiz(question_r).options.push({
+            id: r,
+            text: ()=>document.getElementById(`${r}_option_text`).value,
+            "languages": ()=>{
+                let ret = [];
+                for (var i = 0; i < LANGUAGES.length; i++){
+                    let lang = LANGUAGES[i];
+                    lang.text = ()=>document.getElementById(`${r}_option_text_${lang.id}`).value;
+                    ret.push(lang);
+                }
+
+                return ret;
+
+            },
+            "is_correct": ()=>document.getElementById(`${r}_is_correct`).checked,
+            "score": ()=>document.getElementById(`${r}_score`).value,
+        });
+        
+        if(document.getElementById(question_r + "_options") == null){
+            return;
+        }
+
         let optionsContainer = document.getElementById(question_r + "_options");
         let displayContainer = document.getElementById(question_r + "_options_display");
 
-        let r = (Math.random() + 1).toString(36).substring(7);
+        
 
         let optionDiv = document.createElement("div");
         optionDiv.id = `${r}_box`;
@@ -361,6 +402,7 @@
         button.onclick = function () {
             document.getElementById(`${r}_box`).remove();
             document.getElementById(`${r}_display`).remove();
+            deleteOptionFromQuestion(question_r,r);
         }
 
         optionDiv.appendChild(button);
@@ -441,19 +483,26 @@
         }
     }
 
+
+    function getQuestionFromQuiz(question_id){
+        for(var i=0; i<QUIZ.questions.length; i++){
+            if(QUIZ.questions[i].id == question_id){
+                return QUIZ.questions[i];
+            }
+        } 
+    }
+
+    function deleteQuestionFromQuiz(question_id) {
+        QUIZ.questions = QUIZ.questions.filter(question => question.id !== question_id);
+    }
+
+    function deleteOptionFromQuestion(question_id, option_id){
+        let question = getQuestionFromQuiz(question_id);
+        question.options = question.options.filter(option => option.id !== option_id);
+    }
+
+
 </script>
 
 
-<style>
-            input[type="text"].styled-like-textarea {
-            width: 100%;        /* Set the width to fill its container */
-            height: 50px;       /* Set a fixed height to make it look taller */
-            padding: 10px;      /* Add some padding inside the input */
-            border: 1px solid #ccc; /* Border color */
-            border-radius: 4px; /* Rounded corners */
-            box-sizing: border-box; /* Box sizing to ensure padding doesn't increase the width */
-            font-size: 16px;    /* Font size */
-            overflow-y: auto;   /* Add a scrollbar when text overflows vertically */
-        }
-</style>
 
