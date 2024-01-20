@@ -11,7 +11,7 @@
         <p><strong>Your Score:</strong> {{ $totalScore }}</p>
         <hr/>
     </div>
-    
+
 
     <div class="w3-col s12 l6 m6">
     @foreach ($questionsWithAnswers as $question)
@@ -68,7 +68,7 @@
     </div>
 
 
-    
+
 </div>
 
 

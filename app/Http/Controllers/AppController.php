@@ -16,7 +16,7 @@ use App\Models\QuizPreference;
 
 class AppController extends Controller
 {
-    // Construct 
+    // Construct
     public function __construct()
     {
         $this->middleware('auth');
@@ -45,12 +45,31 @@ class AppController extends Controller
         // Default redirect for other users
         return redirect()->route('home');
     }
-    
+
     public function home()
     {
+        $user_id = Auth::user()->id;
+        $quizAttemptedByUser = Answer::where("user_id",$user_id)->distinct("quiz_id")->get();
+           $scoreSheet = [];
+           $scoreSheet["score"] = [];
+           $scoreSheet["quiz_id"] = [];
+        foreach($quizAttemptedByUser as $quiz){
+            $quiz_id = $quiz->id;
+            $correctAnswers = Answer::where("user_id",$user_id)->where("quiz_id",$quiz_id)->where("is_correct", 1)->get();
+            $scoreTotal = 0;
+            foreach($correctAnswers as $ans){
+                $scoreNow = Option::find($ans->option_id)->score;
+                $scoreTotal = $scoreTotal + $scoreNow;
+            }
+
+            $scoreSheet["score"][] = $scoreTotal;
+            $scoreSheet["quiz_id"][] = $quiz_id;
+        }
         return view('app.index', [
             'showPage' => 'home',
             'latestQuizzes' => Quiz::latest()->take(5)->get(),
+            'quizAttemptedByUser' => $quizAttemptedByUser,
+            'scoreSheet' => $scoreSheet
         ]);
     }
 
@@ -60,7 +79,7 @@ class AppController extends Controller
         $showAnswers = QuizPreference::where('quiz_id', $id)->where('key', 'showAnswers')->get()->first();
 
         $canChangeAnswers = QuizPreference::where('quiz_id', $id)->where('key', 'canChangeAnswers')->get()->first();
-        
+
         if($canChangeAnswers != null && $canChangeAnswers->count() > 0) {
             $canChangeAnswers = $canChangeAnswers->value;
         }
@@ -80,12 +99,12 @@ class AppController extends Controller
                 if($showAnswers == 0){
                     $quizContent['questions'][$index]['options'][$bindex]['is_correct'] = -1;
                 }
-                
+
             }
         }
 
 
-        
+
 
         return view('app.index', [
             'showPage' => 'quiz',
@@ -99,12 +118,12 @@ class AppController extends Controller
         $user = auth()->user();
         $totalScore = 0;
         $correctAnswers = 0;
-    
+
         // Retrieve all answers for the quiz made by the user
         $answers = Answer::where('user_id', $user->id)
                          ->where('quiz_id', $quizId)
                          ->get();
-    
+
         foreach ($answers as $answer) {
             // Assuming each option knows its own score and whether it's correct
             if ($answer->option && $answer->option->is_correct) {
@@ -114,11 +133,11 @@ class AppController extends Controller
             // Alternatively, if the score is based on the question
             // $totalScore += $answer->question->score; // Add score of the question
         }
-    
+
         $totalQuestions = Question::where('quiz_id', $quizId)->count();
-    
- 
-        
+
+
+
         $leaderboard = Answer::with('user', 'option')
             ->where('quiz_id', $quizId)
             ->get()
@@ -141,13 +160,13 @@ class AppController extends Controller
             ->take(10)
             ->values()
             ->all();
-    
+
             $questionsWithAnswers = Question::with(['options', 'answers' => function ($query) use ($user) {
                 $query->where('user_id', $user->id);
             }])->where('quiz_id', $quizId)->get();
-    
 
-        
+
+
 
         return view('app.index', [
             'totalScore' => $totalScore,
@@ -162,7 +181,7 @@ class AppController extends Controller
 
 
     public function settings(){
-        $languages = Language::all(); 
+        $languages = Language::all();
         $prefferedLanguage = UserPreference::where('user_id', auth()->user()->id)->where('key', 'language')->get()->first();
         $reminderTime = $this->getUserPreference('reminder_time');
         $reminderEnabled = $this->getUserPreference('reminder_enabled');
@@ -191,18 +210,18 @@ class AppController extends Controller
     {
         $user = Auth::user();
         $data = $request->only(['language', 'reminder_enabled', 'reminder_time']);
-    
+
         foreach ($data as $key => $value) {
             if ($key == 'reminder_enabled' && !$value) {
                 $value = '0'; // Store as '0' if the reminder is disabled
             }
-    
+
             UserPreference::updateOrCreate(
                 ['user_id' => $user->id, 'key' => $key],
                 ['value' => $value]
             );
         }
-    
+
         return response()->json(['success' => 'Preferences updated successfully.']);
     }
 
@@ -219,6 +238,6 @@ class AppController extends Controller
         ]);
     }
 
-    
-    
+
+
 }
