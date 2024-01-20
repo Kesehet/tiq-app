@@ -9,8 +9,7 @@ class Quiz extends Model
 {
     use HasFactory;
 
-    // Disable writing to this model
-    public $timestamps = false;
+    
 
     protected $fillable = [
         'title',

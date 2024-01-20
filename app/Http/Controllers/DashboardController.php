@@ -14,6 +14,8 @@ use App\Models\UserPreference;
 use Illuminate\Support\Facades\DB;
 use App\Models\QuizPreference;
 use App\Models\Translation;
+use App\Models\Tag;
+use App\Models\TranslationOption;
 
 class DashboardController extends Controller
 {
@@ -66,7 +68,7 @@ class DashboardController extends Controller
          }
 
 
-}
+    }
 
 
     public function quizzes(Request $request){
@@ -219,6 +221,61 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function combinedStore(Request $request){
+
+        $user = Auth::user();
+        if(!$user->isTeamMember()) {
+            return redirect()->route('home');
+        }
+
+        //dd([$request->all(),$request->questions]);
+
+        $questions = $request->questions;
+
+        $quiz = Quiz::updateOrCreate([
+            'title' => $request->name, 
+        ],[
+            'description' => $request->description,
+        ]);
+        foreach($questions as $question) {
+            $questionNow = Question::updateOrCreate([
+                'question_text' => $question['question_text'],
+                'quiz_id' => $quiz->id,
+            ],[]);
+
+            $languages = $question['languages'];
+            foreach($languages as $language) {
+                Translation::updateOrCreate([
+                    'question_id' => $questionNow->id,
+                    'language_id' => $language['id']
+                ],[
+                    'translated_text' => $language['text'] ? $language['text'] : ''
+                ]);
+            }
+
+            foreach($question['options'] as $option) {
+                $optionNow = Option::updateOrCreate([
+                    'question_id' => $questionNow->id,
+                ],[
+                    'option_text' => $option['text'],
+                    'is_correct' => $option['is_correct'],
+                    'score' => $option['score'],
+                    'type' => "text"
+                ]);
+
+                foreach($option['languages'] as $language) {
+                    TranslationOption::updateOrCreate([
+                        'option_id' => $optionNow->id,
+                        'language_id' => $language['id']
+                    ],[
+                        'translated_text' => $language['text']
+                    ]);
+                }
+            }
+        }
+
+        return response()->json($request->all());
+    }
 
 
 

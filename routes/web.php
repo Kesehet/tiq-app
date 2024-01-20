@@ -43,6 +43,7 @@ Route::get('/questions', [DashboardController::class, 'questions'])->name('dashb
 Route::get('/questions/create', [DashboardController::class, 'questionCreate'])->name('dashboard.question.create');
 
 Route::get('/quizzes/combo', [DashboardController::class, 'combined'])->name('dashboard.question.combo');
+Route::post('/quizzes/combo/store', [DashboardController::class, 'combinedStore'])->name('dashboard.question.combo.store');
 
 
 Route::post('/quizzes/store', [DashboardController::class, 'quizStore'])->name('dashboard.quiz.store');

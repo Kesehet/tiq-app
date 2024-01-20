@@ -30,7 +30,7 @@
 
     <div class="w3-row w3-padding">
         <button class="w3-button w3-feature w3-right" onclick="addQuestion(document.getElementById('questions'))">Add Question</button>
-        <input type="button" class="w3-button w3-feature" value="Create Quiz">
+        <input type="button" onclick="submitTheQuiz()" class="w3-button w3-feature" value="Create Quiz">
     </div>  
     
     
@@ -499,6 +499,80 @@
     function deleteOptionFromQuestion(question_id, option_id){
         let question = getQuestionFromQuiz(question_id);
         question.options = question.options.filter(option => option.id !== option_id);
+    }
+
+
+    function submitTheQuiz(){
+
+
+        if(QUIZ.questions.length == 0){
+            // Ask for confirmation from user else cancel
+            var decided = confirm('You have no questions. Do you want to continue?') ? "" : "cancel";
+            if(decided == "cancel") return;
+        }
+
+        
+
+        final_quiz = {
+            'name': QUIZ.name(),
+            'description': QUIZ.description(),
+            'questions': []
+        };
+        
+        
+
+        QUIZ.questions.forEach(question => {
+
+        
+            
+            var languages = [];
+            question.languages().forEach(lang => {
+                languages.push({
+                    'id': lang.id,
+                    'name': lang.name,
+                    'text': lang.text()
+                });
+            })
+            var options = [];
+            question.options.forEach(option => {
+
+        
+
+                var option_languages = [];
+                option.languages().forEach(lang => {
+                    option_languages.push({
+                        'id': lang.id,
+                        'name': lang.name,
+                        'text': lang.text(),
+                    })
+                })
+                options.push({
+                    'id': option.id,
+                    'text': option.text(),
+                    'is_correct': option.is_correct(),
+                    'score': option.score() ? option.score() : 0,
+                    'languages': option_languages,
+                })
+            })
+            
+            
+
+            final_quiz.questions.push({
+                'question_text': question.text(),
+                "languages": languages,
+                "options": options,
+            })
+        })
+
+
+        fetch("{{route('dashboard.question.combo.store')}}", {
+            'method': 'POST',
+            'headers': {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Content-Type': 'application/json'  // Add this line
+            },
+            'body': JSON.stringify(final_quiz)
+        });
     }
 
 
