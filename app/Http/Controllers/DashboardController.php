@@ -212,9 +212,10 @@ class DashboardController extends Controller
     }
 
     public function combined(){
-
+        $languages = Language::all();
         return view('dashboard.index',[
             'showPage' => 'questionCombo',
+            'languages' => $languages
         ]);
     }
 

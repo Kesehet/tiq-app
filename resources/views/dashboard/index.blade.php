@@ -11,6 +11,8 @@
     <script src="{{ asset('scripts/charts.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('css/elements-basic.css') }}">
     <link rel="stylesheet" href="{{ asset('css/colors.css') }}">
+    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
