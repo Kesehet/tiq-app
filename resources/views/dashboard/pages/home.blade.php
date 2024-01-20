@@ -72,6 +72,7 @@
  </div>
 
  <div class="w3-container">
+ <div class="w3-padding w3-col l6 s12 m6 ">
      <h5>Recent Quizzes</h5>
      <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
        <tr>
@@ -87,6 +88,50 @@
      </table><br>
     <a href="{{ route('dashboard.question.combo') }}" class="w3-button w3-dark-grey">Add Questions<i class="fa fa-arrow-right"></i></a>
 
+     </div>
+
+
+     <div class="w3-padding w3-col l6 s12 m6 ">
+     <canvas id="myChart" width="400" height="400"></canvas> <!-- Canvas element for the chart -->
+      <script>
+     var ctx = document.getElementById('myChart').getContext('2d');
+     var myChart = new Chart(ctx, {
+         type: 'bar',
+         data: {
+             labels: @json($recentQuizStats["labels"]),
+             datasets: [{
+                 label: '# ',
+                 data: @json($recentQuizStats["data"]),
+                 backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                 borderColor: [
+                     'rgba(255, 99, 132, 1)',
+                     'rgba(54, 162, 235, 1)',
+                     'rgba(255, 206, 86, 1)',
+                     'rgba(75, 192, 192, 1)',
+                     'rgba(153, 102, 255, 1)',
+                     'rgba(255, 159, 64, 1)'
+                 ],
+                 borderWidth: 1
+             }]
+         },
+         options: {
+             responsive: true,
+             animation: {
+                 duration: 2000, // Duration in milliseconds
+                 delay: (context) => {
+                     let delay = 0;
+                     if (context.type === 'data' && context.mode === 'default' && !context.dropped) {
+                         context.dropped = true;
+                         delay = context.dataIndex * 300 + context.datasetIndex * 100;
+                     }
+                     return delay;
+                 }
+             }
+         }
+     });
+
+     </script>
+     </div>
      </div>
 
 

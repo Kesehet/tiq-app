@@ -39,6 +39,12 @@ class DashboardController extends Controller
 
         $recentQuiz = Quiz::latest()->take(5)->get();
 
+        $recentQuizStats = [];
+        foreach($recentQuiz as $quiz){
+            $recentQuizStats["labels"][] = $quiz->title;
+            $attempted = Answer::where('quiz_id',$quiz->id)->distinct('user_id')->count();
+            $recentQuizStats["data"][] = $attempted;
+        }
 
 
 
@@ -50,6 +56,7 @@ class DashboardController extends Controller
          'languagecount'     => $languagecount,
           'usercount'   => $usercount,
            'recentQuiz'=> $recentQuiz,
+           "recentQuizStats"=>$recentQuizStats,
 
 
 
