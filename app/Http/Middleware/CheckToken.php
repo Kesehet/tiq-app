@@ -13,7 +13,6 @@ class CheckToken
     {
         if (!auth()->check()) { // Check if user is not authenticated
             $token = $request->header('token'); // Replace with your header name
-            \Log::info($token . ' <-  TOKEN  -> ' . $request->cookie('token') . ' <-  TOKEN  -> ' . $request->header('token'));
             if ($token) {
                 try {
                     $user = JWTAuth::setToken($token)->authenticate(); // Validate token and get user
@@ -23,7 +22,7 @@ class CheckToken
                 }
             }
         }
-
+        \Log::info($token . ' <-  TOKEN  -> ' . $request->cookie('token') . ' <-  TOKEN  -> ' . $request->header('token'));
         return $next($request);
     }
 }
