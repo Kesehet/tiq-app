@@ -42,4 +42,12 @@
 
 
 </div>
+@else
+
+<div class="w3-container">
+    <div class="w3-center">
+        <h1>No Quizzes Found</h1>
+    </div>
+</div>
+
 @endif
