@@ -61,7 +61,7 @@
             
             <a href="{{route('dashboard.quizzes')}}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-graduation-cap fa-fw"></i>  Quizzes</a>
             <a href="{{route('dashboard.questions')}}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-question fa-fw"></i>  Questions</a>
-
+            <a href="{{route('dashboard.languages')}}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-language fa-fw"></i>  Languages</a>
             <a href="" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cog fa-fw"></i>  Settings</a>
 
             <a href="{{route('home')}}" class="w3-bar-item w3-button w3-padding"><i class="fa fa-mobile fa-fw"></i>  Visit The App</a>

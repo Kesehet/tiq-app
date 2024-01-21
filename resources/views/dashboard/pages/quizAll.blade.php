@@ -1,7 +1,7 @@
 <div class="w3-container">
     <h2>Quizzes</h2>
     <div class="w3-row w3-margin-bottom">
-        <a href="{{ route('dashboard.quiz.create') }}" class="w3-button w3-round w3-right w3-feature"><i class="fa fa-plus"></i> Add New Quiz</a>
+        <a href="{{ route('dashboard.question.combo') }}" class="w3-button w3-round w3-right w3-feature"><i class="fa fa-plus"></i> Add New Quiz</a>
     </div>
 
     <!-- Search Form -->

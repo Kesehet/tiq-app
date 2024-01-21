@@ -37,17 +37,22 @@ Route::get('/search', [AppController::class, 'search'])->name('search');
 
 
 Route::get('/dashboard', [DashboardController::class, 'home'])->name('dashboard');
-Route::get('/quizzes', [DashboardController::class, 'quizzes'])->name('dashboard.quizzes');
-Route::get('/quizzes/create', [DashboardController::class, 'quizCreate'])->name('dashboard.quiz.create');
-Route::get('/questions', [DashboardController::class, 'questions'])->name('dashboard.questions');
-Route::get('/questions/create', [DashboardController::class, 'questionCreate'])->name('dashboard.question.create');
-
-Route::get('/quizzes/combo', [DashboardController::class, 'combined'])->name('dashboard.question.combo');
-Route::post('/quizzes/combo/store', [DashboardController::class, 'combinedStore'])->name('dashboard.question.combo.store');
+Route::get('backend/languages', [DashboardController::class, 'languages'])->name('dashboard.languages');
+Route::post('backend/languages/store', [DashboardController::class, 'languageStore'])->name('dashboard.languages.store');
+Route::get('backend/languages/delete/{id}', [DashboardController::class, 'languageDelete'])->name('dashboard.languages.destroy');
 
 
-Route::post('/quizzes/store', [DashboardController::class, 'quizStore'])->name('dashboard.quiz.store');
-Route::post('/questions/store', [DashboardController::class, 'questionStore'])->name('dashboard.question.store');
+Route::get('backend/quizzes', [DashboardController::class, 'quizzes'])->name('dashboard.quizzes');
+Route::get('backend/quizzes/create', [DashboardController::class, 'quizCreate'])->name('dashboard.quiz.create');
+Route::get('backend/questions', [DashboardController::class, 'questions'])->name('dashboard.questions');
+Route::get('backend/questions/create', [DashboardController::class, 'questionCreate'])->name('dashboard.question.create');
+
+Route::get('backend/quizzes/combo', [DashboardController::class, 'combined'])->name('dashboard.question.combo');
+Route::post('backend/quizzes/combo/store', [DashboardController::class, 'combinedStore'])->name('dashboard.question.combo.store');
+
+
+Route::post('backend/quizzes/store', [DashboardController::class, 'quizStore'])->name('dashboard.quiz.store');
+Route::post('backend/questions/store', [DashboardController::class, 'questionStore'])->name('dashboard.question.store');
 
 
 

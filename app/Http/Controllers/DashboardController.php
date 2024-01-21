@@ -70,6 +70,52 @@ class DashboardController extends Controller
 
     }
 
+    public function languages(Request $request){
+        $user = Auth::user();
+        if(!$user->isTeamMember()) {
+            return redirect()->route('home');
+        }
+
+        $languages = Language::all();
+        return view('dashboard.index',[
+            'showPage' => 'languageAll',
+            'languages' => $languages
+        ]);
+    }
+
+    public function languageStore(Request $request){
+        $user = Auth::user();
+        if(!$user->isTeamMember()) {
+            return redirect()->route('home');
+        }
+
+        $data = $request->validate([
+            'name' => 'required|max:255',
+            'code' => 'required|max:255',
+            'font' => 'required|max:255',
+        ]);
+
+
+        $language = Language::updateOrCreate([
+            'code' => $data['code']
+        ],[
+            'name' => $data['name'],
+            'font' => $data['font'],
+        ]);
+
+        return redirect()->route('dashboard.languages');
+    }
+
+    public function languageDelete(Request $request, $id){
+        $user = Auth::user();
+        if(!$user->isTeamMember()) {
+            return redirect()->route('home');
+        }
+
+        $language = Language::find($id);
+        $language->delete();
+        return redirect()->route('dashboard.languages');
+    }
 
     public function quizzes(Request $request){
         $user = Auth::user();

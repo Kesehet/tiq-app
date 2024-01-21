@@ -391,9 +391,11 @@
 
         for(var i = 0; i < LANGUAGES.length; i++){
             let langDiv = document.createElement("div");
-            langDiv.className = "w3-row w3-padding";
-
             let lang = LANGUAGES[i];
+
+            langDiv.className = "w3-row w3-padding " + lang.font;
+
+            
 
             let label = document.createElement("label");
             label.for = `${r}_option_text_${lang.id}`;
@@ -454,9 +456,8 @@
 
         for(var i = 0; i < LANGUAGES.length; i++){
             let langDiv = document.createElement("div");
-            langDiv.className = "w3-row w3-padding";
-
             let lang = LANGUAGES[i];
+            langDiv.className = "w3-row w3-padding "+ LANGUAGES[i].font;
 
             let displayLangLabel = document.createElement("label");
             displayLangLabel.for = `${r}_option_text_${lang.id}`;
@@ -464,7 +465,7 @@
 
             let displayLangInput = document.createElement("div");
             displayLangInput.id = `${r}_option_text_${lang.id}_display`;
-            displayLangInput.className = "w3-large w3-white w3-padding-large w3-round-xlarge";
+            displayLangInput.className = "w3-large w3-white w3-padding-large w3-round-xlarge "+lang.font;
 
             langDiv.appendChild(displayLangLabel);
             langDiv.appendChild(displayLangInput);            
