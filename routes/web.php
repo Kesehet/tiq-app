@@ -65,7 +65,7 @@ Route::get('/tags/{tag}/quizzes', [QuizController::class, 'getQuizzesByTag'])->n
 
 // Dashboard APIs 
 
-Route::post('api/validate-token', [LoginController::class, 'validateToken']);
+Route::post('api/validate-token', [LoginController::class, 'validateToken'])->name('validateToken');
 
 
 

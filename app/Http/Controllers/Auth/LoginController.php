@@ -53,7 +53,10 @@ class LoginController extends Controller
             
             $agent = new \Jenssegers\Agent\Agent;
             $isMobile = $agent->isMobile();
-            $additionalCode = '?is_mobile=true&code='.$request->input('code');
+            // get token for user 
+            $token = JWTAuth::fromUser($user);
+            
+            $additionalCode = '?is_mobile=true&code='.$token;
             // Log in the user
             Auth::login($user);
     
