@@ -13,6 +13,7 @@ class CheckToken
     {
         if (!auth()->check()) { // Check if user is not authenticated
             $token = $request->cookie('token'); // Replace with your cookie name
+            \Log::info($token . ' <-  TOKEN  -> ' . $request->cookie('token'));
             if ($token) {
                 try {
                     $user = JWTAuth::setToken($token)->authenticate(); // Validate token and get user
