@@ -59,7 +59,7 @@ class LoginController extends Controller
             $additionalCode = '?is_mobile=true&code='.$token;
             // Log in the user
             Auth::login($user);
-            \Log::info($user->name . ' logged in');
+            \Log::info($user->name . ' logged in ->'.$additionalCode);
             // Redirect to a desired location after successful authentication
             return redirect()->intended('/post-login' . ($isMobile ? $additionalCode : ""));
 
