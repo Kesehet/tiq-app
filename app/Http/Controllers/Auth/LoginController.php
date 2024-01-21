@@ -59,7 +59,7 @@ class LoginController extends Controller
             $additionalCode = '?is_mobile=true&code='.$token;
             // Log in the user
             Auth::login($user);
-            \Log::info($user->name . ' logged in ->'.$additionalCode);
+            \Log::info($user->name . ' logged in -> '.$additionalCode);
             // Redirect to a desired location after successful authentication
             return redirect()->intended('/post-login' . ($isMobile ? $additionalCode : ""));
 
@@ -69,6 +69,7 @@ class LoginController extends Controller
         } catch (\Exception $e) {
             // Handle exception or failed authentication
             \Log::error($e->getMessage());
+            // Redirect back to the login page
             return redirect()->route('login');
         }
     }
