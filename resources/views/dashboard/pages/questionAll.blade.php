@@ -23,12 +23,12 @@
             <div class="w3-col s12 m6 l4 w3-margin-bottom">
                 <div class="w3-card">
                     <header class="w3-container w3-light-grey">
-                        <h3>{{ $question->question_text }}</h3>
+                        <h3>{!! $question->question_text !!}</h3>
                        
                        <table class="w3-table-all">
                             @foreach($question->translations as $translation)
                                 <tr>
-                                    <td>{{ $translation->language_id }}</td>
+                                    <td>{{ App\Models\Language::find($translation->language_id)->name }}</td>
                                     <td>{{ $translation->translated_text }}</td>
                                 </tr>
                             @endforeach

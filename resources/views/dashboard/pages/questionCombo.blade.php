@@ -16,8 +16,19 @@
             <input type="text" id="quiz_name" class="w3-input" name="quiz_name" value="" placeholder="Please enter the name of the Quiz">
         </div>
         <div class="w3-row w3-padding">
-            <label for="quiz_name">Quiz Description</label>
+            <label for="quiz_description">Quiz Description</label>
             <input type="text" id="quiz_description" class="w3-input" name="quiz_description" value="" placeholder="Please enter the description of the Quiz">
+        </div>
+
+        <div class="w3-row w3-padding">
+            <div class="w3-col s6 l6 m6">
+                <label for="quiz_preference_can_change_answers">Can Change Answers ?</label>
+                <input type="checkbox" id="quiz_preference_can_change_answers" class="w3-input" name="quiz_preference_can_change_answers" value="">
+            </div>
+            <div class="w3-col s6 l6 m6">
+                <label for="quiz_preference_show_answers">Show Answers ?</label>
+                <input type="checkbox" id="quiz_preference_show_answers" class="w3-input" name="quiz_preference_show_answers" value="">
+            </div>
         </div>
     </div>
 
@@ -45,7 +56,11 @@
     var QUIZ = {
         name: () => document.getElementById("quiz_name").value,
         description: () => getEditorData("quiz_description"),
-        questions : []
+        "preferences" : {
+            can_change_answers : () => document.getElementById("quiz_preference_can_change_answers").checked,
+            show_answers : () => document.getElementById("quiz_preference_show_answers").checked,
+        },
+        "questions" : []
     };
 
 
@@ -516,6 +531,8 @@
         final_quiz = {
             'name': QUIZ.name(),
             'description': QUIZ.description(),
+            'can_change_answer': QUIZ.preferences.can_change_answers(),
+            'show_answers': QUIZ.preferences.show_answers(),
             'questions': []
         };
         
@@ -572,7 +589,13 @@
                 'Content-Type': 'application/json'  // Add this line
             },
             'body': JSON.stringify(final_quiz)
-        });
+        }).then(response => response.json()).then(data => {
+            
+            console.log(data);
+            window.location.href = "{{route('home')}}";
+        }).catch(error => {
+            console.error('Error:', error);
+        })
     }
 
 

@@ -13,7 +13,7 @@
                     {{ $quiz->title }}
                 </div>
                 <div class="w3-tiny">
-                    <p>{{ $quiz->description }}</p>
+                    <p>{!! $quiz->description !!}</p>
                 </div>
             </div>
         </div>

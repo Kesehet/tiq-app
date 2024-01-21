@@ -98,10 +98,10 @@
      var myChart = new Chart(ctx, {
          type: 'bar',
          data: {
-             labels: @json($recentQuizStats["labels"]),
+             labels: @json($recentQuizStats["labels"] ?? []),
              datasets: [{
                  label: '# ',
-                 data: @json($recentQuizStats["data"]),
+                 data: @json($recentQuizStats["data"] ?? []),
                  backgroundColor: 'rgba(255, 159, 64, 0.2)',
                  borderColor: [
                      'rgba(255, 99, 132, 1)',

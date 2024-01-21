@@ -77,7 +77,7 @@ function clearOptions(){
 
 function getOptionBox(text,id,is_correct){
     console.log(is_correct);
-    color = is_correct == 1 ? "w3-green" : "w3-grey";
+    color = is_correct == 1 ? "green" : "grey";
     return `
         <li id="${id}" name="${id}" class="w3-hover-${color}" onclick="addAnswerToList('${id}')">${text}</li>
     `;

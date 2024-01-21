@@ -24,7 +24,7 @@
                         <h3>{{ $quiz->title }}</h3>
                     </header>
                     <div class="w3-container">
-                        <p>{{ $quiz->description }}</p>
+                        <p>{!! $quiz->description !!}</p>
                     </div>
                 </div>
             </div>

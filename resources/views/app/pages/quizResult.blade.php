@@ -19,17 +19,17 @@
         <div class="w3-card w3-round-large">
             <div class="w3-container">
                 <h2>{{ $question->title }}</h2>
-                <p>{{ $question->question_text }}</p>
+                <p>{!! $question->question_text !!}</p>
                 @foreach ($question->options as $option)
-                    <div class="w3-row w3-padding w3-border {{ $option->id == $question->answers->first()->option_id ? 'w3-light-grey' : '' }} {{ $option->is_correct ? 'w3-border-green' : '' }}">
+                    <div class="w3-row w3-padding w3-border {{ ($option->id ?? 0) == ($question->answers->first()->option_id ?? 0) ? 'w3-light-grey' : '' }} {{ $option->is_correct ? 'w3-border-green' : '' }}">
                         <div class="w3-col l10 m10 s10">
-                            {{ $option->option_text }}
+                            {{ ($option->option_text ?? '') }}
                             @if ($option->is_correct)
                                 <span class="w3-tag w3-green w3-round">Correct</span>
                             @endif
                         </div>
                         <div class="w3-col l2 m2 s2">
-                            @if ($option->id == $question->answers->first()->option_id)
+                            @if ($option->id == ($question->answers->first()->option_id ?? 0))
                                 <span class="w3-tag w3-blue w3-round">Selected</span>
                             @endif
                         </div>

@@ -19,7 +19,7 @@
     <div class="w3-col m4 l4 s4 w3-animate-right">
             <select id="language" class="w3-select w3-border-bottom w3-round" onchange="saveSettings()" name="language">
                 @foreach ($languages as $language)
-                    <option value="{{ $language->id }}" {{ $prefferedLanguage->value == $language->id ? 'selected' : '' }}>
+                    <option value="{{ $language->id }}" {{ ($prefferedLanguage->value ?? 0) == $language->id ? 'selected' : '' }}>
                         {{ $language->name }}
                     </option>
                 @endforeach

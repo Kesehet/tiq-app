@@ -1,4 +1,4 @@
-
+@if (count($scoreSheet["score"]) > 0)
 <div>
     <div class="w3-container header7">
         Your Performance
@@ -6,9 +6,6 @@
     <div class="scroll-wrapper">
         <div class="w3-container scroll-card" style="width: 75vw;">
             <canvas class="w3-container w3-card-4 w3-round-large "  id="quizAnalyticsChart"></canvas>
-        </div>
-        <div class="w3-container scroll-card" style="width: 75vw;">
-            <canvas class="w3-container w3-card-4 w3-round-large "  id="quizAnalyticsChart2"></canvas>
         </div>
     </div>
 </div>
@@ -20,7 +17,7 @@
 
     // Data for the charts
     const chartData = {
-        labels: @json($scoreSheet["quiz_id"]),
+        labels: @json($scoreSheet["quiz"]),
         datasets: [{
             label: 'Scores',
             data: @json($scoreSheet["score"]),
@@ -39,6 +36,6 @@
     };
 
     // Create the charts
-    const quizAnalyticsChart = createChart('quizAnalyticsChart', 'line', chartData, chartOptions);
-    const quizAnalyticsChart2 = createChart('quizAnalyticsChart2', 'bar', chartData, chartOptions);
+    const quizAnalyticsChart = createChart('quizAnalyticsChart', 'bar', chartData, chartOptions);
 </script>
+@endif

@@ -50,25 +50,29 @@ class AppController extends Controller
     {
         $user_id = Auth::user()->id;
         $quizAttemptedByUser = Answer::where("user_id",$user_id)->distinct("quiz_id")->get();
+        $attemptedQuizIds = $quizAttemptedByUser->pluck('quiz_id');
            $scoreSheet = [];
            $scoreSheet["score"] = [];
-           $scoreSheet["quiz_id"] = [];
+           $scoreSheet["quiz"] = [];
         foreach($quizAttemptedByUser as $quiz){
-            $quiz_id = $quiz->id;
+            $quiz_id = Quiz::find($quiz->quiz_id)->id;
             $correctAnswers = Answer::where("user_id",$user_id)->where("quiz_id",$quiz_id)->where("is_correct", 1)->get();
             $scoreTotal = 0;
             foreach($correctAnswers as $ans){
                 $scoreNow = Option::find($ans->option_id)->score;
                 $scoreTotal = $scoreTotal + $scoreNow;
             }
-
             $scoreSheet["score"][] = $scoreTotal;
-            $scoreSheet["quiz_id"][] = $quiz_id;
+            $scoreSheet["quiz"][] = Quiz::find($quiz->quiz_id)->title;
         }
+
+        $latestQuizzes = Quiz::whereNotIn('id', $attemptedQuizIds)->latest()->take(5)->get();
         return view('app.index', [
             'showPage' => 'home',
-            'latestQuizzes' => Quiz::latest()->take(5)->get(),
+            'latestQuizzes' => $latestQuizzes,
             'quizAttemptedByUser' => $quizAttemptedByUser,
+            'allQuizzes'=> Quiz::latest()->take(5)->get(),
+            'randomQuiz'=> Quiz::inRandomOrder()->take(5)->get(),
             'scoreSheet' => $scoreSheet
         ]);
     }
@@ -186,7 +190,7 @@ class AppController extends Controller
         $reminderTime = $this->getUserPreference('reminder_time');
         $reminderEnabled = $this->getUserPreference('reminder_enabled');
         $user = auth()->user();
-
+        
         return view('app.index', [
             'showPage' => 'settings',
             'languages' => $languages,

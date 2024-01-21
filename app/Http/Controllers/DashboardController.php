@@ -237,6 +237,19 @@ class DashboardController extends Controller
         ],[
             'description' => $request->description,
         ]);
+
+        QuizPreference::updateOrCreate([
+            'quiz_id' => $quiz->id,
+        ],[
+            'key' => 'showAnswers',
+            'value' => $request->show_answers,
+        ]);
+        QuizPreference::updateOrCreate([
+            'quiz_id' => $quiz->id,
+        ],[
+            'key' => 'canChangeAnswers',
+            'value' => $request->can_change_answer,
+        ]);
         foreach($questions as $question) {
             $questionNow = Question::updateOrCreate([
                 'question_text' => $question['question_text'],
