@@ -63,9 +63,6 @@ class LoginController extends Controller
             // Redirect to a desired location after successful authentication
             return redirect()->intended('/post-login' . ($isMobile ? $additionalCode : ""));
 
-
-
-
         } catch (\Exception $e) {
             // Handle exception or failed authentication
             \Log::error($e->getMessage());
