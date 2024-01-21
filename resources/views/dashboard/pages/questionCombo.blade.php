@@ -19,6 +19,10 @@
             <label for="quiz_description">Quiz Description</label>
             <input type="text" id="quiz_description" class="w3-input" name="quiz_description" value="" placeholder="Please enter the description of the Quiz">
         </div>
+        <div class="w3-row w3-padding">
+            <label for="quiz_name">Quiz Featured Image</label>
+            <input type="text" id="quiz_featured_image" class="w3-input" name="quiz_featured_image" value="" placeholder="Please enter the featured image of the Quiz">
+        </div>
 
         <div class="w3-row w3-padding">
             <div class="w3-col s6 l6 m6">
@@ -56,6 +60,7 @@
     var QUIZ = {
         name: () => document.getElementById("quiz_name").value,
         description: () => getEditorData("quiz_description"),
+        featured_image: () => document.getElementById("quiz_featured_image").value,
         "preferences" : {
             can_change_answers : () => document.getElementById("quiz_preference_can_change_answers").checked,
             show_answers : () => document.getElementById("quiz_preference_show_answers").checked,
@@ -533,6 +538,7 @@
             'description': QUIZ.description(),
             'can_change_answer': QUIZ.preferences.can_change_answers(),
             'show_answers': QUIZ.preferences.show_answers(),
+            'featured_image': QUIZ.featured_image(),
             'questions': []
         };
         

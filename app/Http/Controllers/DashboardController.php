@@ -236,6 +236,7 @@ class DashboardController extends Controller
             'title' => $request->name, 
         ],[
             'description' => $request->description,
+            'featured_image' => $request->featured_image,
         ]);
 
         QuizPreference::updateOrCreate([
