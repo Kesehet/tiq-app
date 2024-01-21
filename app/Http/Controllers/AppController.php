@@ -108,12 +108,21 @@ class AppController extends Controller
             }
         }
 
-
+        $languages = [];
+        foreach(Language::all() as $language) {
+            $languages[$language->code] = [
+                "name"=>$language->name,
+                "code"=>$language->code,
+                "font"=>$language->font,
+                "id" => $language->id
+            ];
+        }
 
 
         return view('app.index', [
             'showPage' => 'quiz',
             'quiz' =>  $the_quiz,
+            'languages'=> $languages,
             'quizContent' => json_encode($quizContent)
         ]);
     }
