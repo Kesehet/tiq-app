@@ -68,7 +68,7 @@ class LoginController extends Controller
 
         } catch (\Exception $e) {
             // Handle exception or failed authentication
-            
+            \Log::error($e->getMessage());
             return redirect()->route('login');
         }
     }
