@@ -1,5 +1,5 @@
 <!-- A list of all quizes -->
-
+@if(count($allQuizzes) > 0)
 <div class="">
     <div class="w3-container header5">
         All Quizzes
@@ -42,3 +42,4 @@
 
 
 </div>
+@endif
