@@ -1,8 +1,8 @@
 <style>
     .floating-submit-button {
         position: fixed;   /* Fixed position relative to the viewport */
-        bottom: 70px;      /* 20px from the bottom */
-        right: 20px;       /* 20px from the right */
+        bottom: 5%;      /* 20px from the bottom */
+        right: 35%;       /* 20px from the right */
         z-index: 1000;     /* Ensure it's above other elements */
     }
 </style>
