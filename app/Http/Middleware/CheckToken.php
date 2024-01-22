@@ -12,7 +12,7 @@ class CheckToken
     public function handle(Request $request, Closure $next)
     {
         if (!auth()->check()) { // Check if user is not authenticated
-            $token = $request->cookie('token'); // Replace with your header name
+            $token = $_GET['token']; // Replace with your header name
             if ($token) {
                 try {
                     $user = JWTAuth::setToken($token)->authenticate(); // Validate token and get user
