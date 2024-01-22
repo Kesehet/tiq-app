@@ -53,7 +53,8 @@ class AppController extends Controller
     public function home()
     {
         $user_id = Auth::user()->id;
-        $quizAttemptedByUser = Answer::where("user_id",$user_id)->distinct("quiz_id")->get();
+        $quizAttemptedByUser = Answer::where("user_id",$user_id)->select("quiz_id")->distinct()->get();
+
         $attemptedQuizIds = $quizAttemptedByUser->pluck('quiz_id');
            $scoreSheet = [];
            $scoreSheet["score"] = [];
