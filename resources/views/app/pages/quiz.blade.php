@@ -29,7 +29,7 @@
 
 
     
-    <div id="quizSection" class="w3-animate-opacity" style="display:none;">
+    <div id="quizSection" class="w3-animate-opacity w3-margin-bottom w3-padding-bottom" style="display:none;">
         @foreach($questions->where('quiz_id', $quiz->id) as $question)
             <div class="w3-card questionCard w3-round-xxlarge w3-margin-bottom">
                 <div id="base_question" class="w3-panel w3-padding">{!! $question->question_text !!}</div>
