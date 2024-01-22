@@ -22,6 +22,7 @@ class AppController extends Controller
     // Construct
     public function __construct()
     {
+        dd($_GET);
         $this->middleware('auth');
 
         // Check if the user is a team member
@@ -32,11 +33,11 @@ class AppController extends Controller
 
     }
 
-    public function postLoginRedirect()
+    public function postLoginRedirect(Request $request)
     {
         // get the url 
-        dd($_GET);
         
+
         // Check if the request is a mobile request
         if(isset($_GET['is_mobile'])){
             // return a custom view
