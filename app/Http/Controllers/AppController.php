@@ -112,8 +112,7 @@ class AppController extends Controller
             }
         }
 
-        if($canChangeAnswers == 0 && !$this->isAttemptedUser($user_id, $the_quiz->id) ) {
-            dd([($canChangeAnswers == 0 && !$this->isAttemptedUser($user_id, $the_quiz->id)), (!$this->isAttemptedUser($user_id, $the_quiz->id)), ($canChangeAnswers == 0), $canChangeAnswers]);
+        if($canChangeAnswers == 0 && $this->isAttemptedUser($user_id, $the_quiz->id) ) {
             return redirect()->route('quiz-results', ['quizId' => $id]);
         }
 
