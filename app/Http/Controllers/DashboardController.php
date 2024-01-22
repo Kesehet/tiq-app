@@ -327,7 +327,7 @@ class DashboardController extends Controller
                         'option_id' => $optionNow->id,
                         'language_id' => $language['id']
                     ],[
-                        'translated_text' => $language['text']
+                        'translated_text' => $language['text'] ? $language['text'] : ' This Option is not available in your language. '
                     ]);
                 }
             }

@@ -33,7 +33,7 @@
         @foreach($questions->where('quiz_id', $quiz->id) as $question)
             <div class="w3-card questionCard w3-round-xxlarge w3-margin-bottom">
                 <div id="base_question" class="w3-panel w3-padding">{!! $question->question_text !!}</div>
-                <div id="question" class="w3-panel w3-border w3-padding"> {!! $translations->where('question_id', $question->id)->where('language_id',$userPrefferedLanguage)->first()->translated_text ?? ' <b style="color:red;">Not available in your language.</b> <br>'.$translations->where('question_id', $question->id)->first()->translated_text !!} </div>
+                <div id="question" class="w3-panel w3-border w3-padding"> {!! $translations->where('question_id', $question->id)->where('language_id',$userPrefferedLanguage)->first()->translated_text ?? ' <b style="color:red;">Not available in your language.</b> <br>'.$questions->where('question_id', $question->id)->first()->question_text !!} </div>
                 
                 <div class="w3-ul w3-padding-large" id="option_holder">
                     @foreach($options->where('question_id', $question->id) as $option)
@@ -41,7 +41,7 @@
                             <label>
                                 <input type="radio" name="question_{{ $question->id }}" qid="{{ $question->id }}" value="{{ $option->id }}" style="display:none;">
                                 <i class="fa fa-circle w3-left"></i>
-                                {!! $option_transaltions->where('option_id', $option->id)->where('language_id', $userPrefferedLanguage)->first()->translated_text ?? ' <b style="color:red;">Not available in your language.</b> <br>'.$option_transaltions->where('option_id', $option->id)->first()->translated_text !!}
+                                {!! $option_transaltions->where('option_id', $option->id)->where('language_id', $userPrefferedLanguage)->first()->translated_text ?? ' <b style="color:red;">Not available in your language.</b> <br>'.$options->where('option_id', $option->id)->first()->option_text !!}
                             </label>
                         </div>
                     @endforeach
