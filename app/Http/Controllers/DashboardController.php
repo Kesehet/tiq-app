@@ -43,8 +43,11 @@ class DashboardController extends Controller
 
         $recentQuizStats = [];
         foreach($recentQuiz as $quiz){
-            $recentQuizStats["labels"][] = $quiz->title;
             $attempted = Answer::where('quiz_id',$quiz->id)->select('user_id')->distinct()->count();
+            if($attempted == 0){
+                continue;
+            }
+            $recentQuizStats["labels"][] = $quiz->title;
             $recentQuizStats["data"][] = $attempted;
         }
 
