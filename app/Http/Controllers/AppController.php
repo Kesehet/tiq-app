@@ -10,9 +10,12 @@ use App\Models\Option;
 use App\Models\User;
 use App\Models\Question;
 use App\Models\Language;
-use App\Models\UserPreference;
-use Illuminate\Support\Facades\DB;
 use App\Models\QuizPreference;
+use App\Models\Translation;
+use App\Models\UserPreference;
+use App\Models\TranslationOption;
+use Illuminate\Support\Facades\DB;
+
 
 class AppController extends Controller
 {
@@ -74,12 +77,14 @@ class AppController extends Controller
             'quizAttemptedByUser' => $quizAttemptedByUser,
             'allQuizzes'=> Quiz::latest()->take(5)->get(),
             'randomQuiz'=> Quiz::inRandomOrder()->take(5)->get(),
-            'scoreSheet' => $scoreSheet
+            'scoreSheet' => $scoreSheet,
         ]);
     }
 
     public function quiz($id)
     {
+        $user_id = Auth::user()->id;
+
         $the_quiz = Quiz::find($id);
         $showAnswers = QuizPreference::where('quiz_id', $id)->where('key', 'showAnswers')->get()->first();
 
@@ -108,22 +113,19 @@ class AppController extends Controller
             }
         }
 
-        $languages = [];
-        foreach(Language::all() as $language) {
-            $languages[$language->code] = [
-                "name"=>$language->name,
-                "code"=>$language->code,
-                "font"=>$language->font,
-                "id" => $language->id
-            ];
-        }
+        $userPrefferedLanguage = UserPreference::where('user_id', auth()->user()->id)->where('key', 'language')->get()->first();
 
 
         return view('app.index', [
             'showPage' => 'quiz',
-            'quiz' =>  $the_quiz,
-            'languages'=> $languages,
-            'quizContent' => json_encode($quizContent)
+            'quiz' =>  Quiz::find($id),
+            'questions' => Question::all(),
+            'languages'=> Language::all(),
+            "translations"=> Translation::all(),
+            "options" => Option::all(),
+            "option_transaltions"=> TranslationOption::all(),
+            'userPrefferedLanguage' => $userPrefferedLanguage->value ?? Language::all()->first()->id,
+            'showAnswers' => $showAnswers
         ]);
     }
 

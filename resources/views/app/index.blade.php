@@ -40,6 +40,9 @@
         <a href="{{ route('search') }}"><i class="fa-solid fa-magnifying-glass"></i></a>
         <!--a href=""><i class="fa-solid fa-user"></i></a-->
         <a href="{{route('settings')}}"><i class="fa-solid fa-cog"></i></a>
+        @if (Auth::user()->isTeamMember())
+            <a href="{{route('dashboard')}}"><i class="fa-solid fa-chart-line"></i></a>
+        @endif
     </div>
 
     <script>

@@ -90,9 +90,10 @@
             "id": r,
             "text": () => getEditorData(`${r}_question_text`),
             "languages": ()=>{
+                var ret = [];
+                
                 for(var i = 0; i < LANGUAGES.length; i++){
-                    let lang = LANGUAGES[i];
-                    var ret = [];
+                    let lang = LANGUAGES[i];                        
                     if(document.getElementById(`${r}_question_text_${lang.id}`)){
                         lang.text = ()=>document.getElementById(`${r}_question_text_${lang.id}`).value;
                         ret.push(lang);
@@ -136,7 +137,7 @@
             langDiv.className = "w3-row w3-padding";
 
             let langLabel = document.createElement("label");
-            langLabel.for = `${r}_question_text_${LANGUAGES[i].id}`;
+            langLabel.for = `${r}_question_text_${LANGUAGES[i].id}_label`;
             langLabel.textContent = "Question " + LANGUAGES[i].name;
 
             let langInput = document.createElement("textarea");

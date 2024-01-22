@@ -278,45 +278,44 @@ class DashboardController extends Controller
 
         $questions = $request->questions;
 
-        $quiz = Quiz::updateOrCreate([
+        $quiz = Quiz::create([
             'title' => $request->name, 
-        ],[
             'description' => $request->description,
             'featured_image' => $request->featured_image,
         ]);
 
         QuizPreference::updateOrCreate([
             'quiz_id' => $quiz->id,
-        ],[
             'key' => 'showAnswers',
+        ],[            
             'value' => $request->show_answers,
         ]);
         QuizPreference::updateOrCreate([
             'quiz_id' => $quiz->id,
-        ],[
             'key' => 'canChangeAnswers',
+        ],[            
             'value' => $request->can_change_answer,
         ]);
         foreach($questions as $question) {
             $questionNow = Question::updateOrCreate([
-                'question_text' => $question['question_text'],
+                'question_text' => $question['question_text'] ?? '<div></div>',
                 'quiz_id' => $quiz->id,
             ],[]);
 
             $languages = $question['languages'];
             foreach($languages as $language) {
                 Translation::updateOrCreate([
+                    'language_id' => $language['id'],
                     'question_id' => $questionNow->id,
-                    'language_id' => $language['id']
                 ],[
+
                     'translated_text' => $language['text'] ? $language['text'] : ''
                 ]);
             }
 
             foreach($question['options'] as $option) {
-                $optionNow = Option::updateOrCreate([
+                $optionNow = Option::create([
                     'question_id' => $questionNow->id,
-                ],[
                     'option_text' => $option['text'],
                     'is_correct' => $option['is_correct'],
                     'score' => $option['score'],
