@@ -15,6 +15,7 @@ use App\Models\Translation;
 use App\Models\UserPreference;
 use App\Models\TranslationOption;
 use Illuminate\Support\Facades\DB;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 
 class AppController extends Controller
