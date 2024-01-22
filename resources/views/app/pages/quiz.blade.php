@@ -1,8 +1,8 @@
 <style>
     .floating-submit-button {
         position: fixed;   /* Fixed position relative to the viewport */
-        bottom: 5%;      /* 20px from the bottom */
-        right: 35%;       /* 20px from the right */
+        bottom: 7%;      /* 20px from the bottom */
+        right: 10%;       /* 20px from the right */
         z-index: 1000;     /* Ensure it's above other elements */
     }
 </style>
@@ -35,7 +35,7 @@
                 <div id="base_question" class="w3-panel w3-padding">{!! $question->question_text !!}</div>
                 <div id="question" class="w3-panel w3-border w3-padding"> {!! $translations->where('question_id', $question->id)->where('language_id',$userPrefferedLanguage)->first()->translated_text ?? ' <b style="color:red;">Not available in your language.</b> <br>'.$translations->where('question_id', $question->id)->first()->translated_text !!} </div>
                 
-                <div class="w3-ul w3-border w3-padding-large" id="option_holder">
+                <div class="w3-ul w3-padding-large" id="option_holder">
                     @foreach($options->where('question_id', $question->id) as $option)
                         <div class="w3-card w3-animate-left option_set_{{ $question->id }} w3-padding" onclick="handleRadioClick(this.children[0].children[0],'option_set_{{ $question->id }}');">
                             <label>
