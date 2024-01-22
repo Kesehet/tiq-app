@@ -34,6 +34,7 @@ class AppController extends Controller
 
     public function postLoginRedirect()
     {
+        // Check if the request is a mobile request
         if(isset($_GET['is_mobile'])){
             // return a custom view
             return view('auth.mobile', [
@@ -59,6 +60,8 @@ class AppController extends Controller
                 'code' => $_GET['code'],
             ]);
         }
+        // get the url 
+        dd($_GET);
 
         // Check if the user is a team member
         if (Auth::check() && Auth::user()->isTeamMember()) {
