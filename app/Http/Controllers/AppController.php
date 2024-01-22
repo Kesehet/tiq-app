@@ -40,6 +40,26 @@ class AppController extends Controller
                 'code' => $_GET['code'],
             ]);
         }
+
+        if(isset($_GET['code'])){
+            if (!auth()->check()) { // Check if user is not authenticated
+                $token = (isset($_GET['code']) ? $_GET['code'] : "no code") ; // Replace with your header name
+                if ($token) {
+                    try {
+                        $user = JWTAuth::setToken($token)->authenticate(); // Validate token and get user
+                        auth()->login($user); // Log in the user
+                    } catch (\Exception $e) {
+                        // Handle invalid token (e.g., do nothing or clear the cookie)
+                    }
+                }
+                dd($user);
+                return redirect()->route('home');
+            }
+            return view('auth.mobile', [
+                'code' => $_GET['code'],
+            ]);
+        }
+
         // Check if the user is a team member
         if (Auth::check() && Auth::user()->isTeamMember()) {
             // Redirect to the dashboard
