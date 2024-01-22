@@ -35,18 +35,17 @@
                 <div id="base_question" class="w3-panel w3-padding">{!! $question->question_text !!}</div>
                 <div id="question" class="w3-panel w3-border w3-padding"> {!! $translations->where('question_id', $question->id)->where('language_id',$userPrefferedLanguage)->first()->translated_text ?? ' <b style="color:red;">Not available in your language.</b> <br>'.$translations->where('question_id', $question->id)->first()->translated_text !!} </div>
                 
-                <ul class="w3-ul w3-border w3-padding-large" id="option_holder">
-                @foreach($options->where('question_id', $question->id) as $option)
-                    <div class="w3-card w3-animate-left option_set_{{ $question->id }} w3-padding" onclick="handleRadioClick(this.children[0].children[0],'option_set_{{ $question->id }}');">
-                        <label>
-                            <input type="radio" name="question_{{ $question->id }}" qid="{{ $question->id }}" value="{{ $option->id }}" style="display:none;">
-                            <i class="fa fa-circle w3-left"></i>
-                            {!! $option_transaltions->where('option_id', $option->id)->where('language_id', $userPrefferedLanguage)->first()->translated_text ?? ' <b style="color:red;">Not available in your language.</b> <br>'.$option_transaltions->where('option_id', $option->id)->first()->translated_text !!}
-                        </label>
-                    </div>
-                @endforeach
-
-                </ul>
+                <div class="w3-ul w3-border w3-padding-large" id="option_holder">
+                    @foreach($options->where('question_id', $question->id) as $option)
+                        <div class="w3-card w3-animate-left option_set_{{ $question->id }} w3-padding" onclick="handleRadioClick(this.children[0].children[0],'option_set_{{ $question->id }}');">
+                            <label>
+                                <input type="radio" name="question_{{ $question->id }}" qid="{{ $question->id }}" value="{{ $option->id }}" style="display:none;">
+                                <i class="fa fa-circle w3-left"></i>
+                                {!! $option_transaltions->where('option_id', $option->id)->where('language_id', $userPrefferedLanguage)->first()->translated_text ?? ' <b style="color:red;">Not available in your language.</b> <br>'.$option_transaltions->where('option_id', $option->id)->first()->translated_text !!}
+                            </label>
+                        </div>
+                    @endforeach
+                </div>
             </div>
         @endforeach
         <!-- Floating button at bottom right to submit the quiz -->
