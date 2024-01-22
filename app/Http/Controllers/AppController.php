@@ -58,8 +58,8 @@ class AppController extends Controller
            $scoreSheet = [];
            $scoreSheet["score"] = [];
            $scoreSheet["quiz"] = [];
-        foreach($quizAttemptedByUser as $quiz){
-            $quiz_id = Quiz::find($quiz->quiz_id)->id;
+        foreach($attemptedQuizIds as $quiz_id){
+            $quiz_id = Quiz::find($quiz_id)->id;
             $correctAnswers = Answer::where("user_id",$user_id)->where("quiz_id",$quiz_id)->where("is_correct", 1)->get();
             $scoreTotal = 0;
             foreach($correctAnswers as $ans){
