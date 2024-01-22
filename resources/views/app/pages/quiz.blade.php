@@ -41,7 +41,7 @@
                             <label>
                                 <input type="radio" name="question_{{ $question->id }}" qid="{{ $question->id }}" value="{{ $option->id }}" style="display:none;">
                                 <i class="fa fa-circle w3-left"></i>
-                                {!! $option_transaltions->where('option_id', $option->id)->where('language_id', $userPrefferedLanguage)->first()->translated_text ?? ' <b style="color:red;">Not available in your language.</b> <br>'.$options->where('option_id', $option->id)->first()->option_text !!}
+                                {!! $option_transaltions->where('option_id', $option->id)->where('language_id', $userPrefferedLanguage)->first()->translated_text ?? ' <b style="color:red;">Not available in your language.</b> <br>'.$options->where('id', $option->id)->first()->option_text !!}
                             </label>
                         </div>
                     @endforeach
