@@ -23,22 +23,19 @@ class AppController extends Controller
     // Construct
     public function __construct()
     {
-        //dd($_GET);
+        
 
-        if(isset($_GET['code'])){
-            if (!auth()->check()) { // Check if user is not authenticated
-                $token = (isset($_GET['code']) ? $_GET['code'] : "no code") ; // Replace with your header name
-                if ($token) {
-                    try {
-                        $user = JWTAuth::setToken($token)->authenticate(); // Validate token and get user
-                        auth()->login($user); // Log in the user
-                    } catch (\Exception $e) {
-                        // Handle invalid token (e.g., do nothing or clear the cookie)
-                    }
-                }
-                return redirect()->route('home');
+        if (isset($_GET['code']) && !auth()->check()) { // Combined the outer and inner 'if'
+            $token = $_GET['code']; // Direct assignment as we already know 'code' is set
+            try {
+                $user = JWTAuth::setToken($token)->authenticate(); // Validate token and get user
+                auth()->login($user); // Log in the user
+            } catch (\Exception $e) {
+                // Handle invalid token (e.g., do nothing or clear the cookie)
             }
+            return redirect()->route('home');
         }
+        
 
 
         $this->middleware('auth');
