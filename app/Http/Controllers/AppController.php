@@ -95,9 +95,7 @@ class AppController extends Controller
             $canChangeAnswers = $canChangeAnswers->value;
         }
 
-        if($canChangeAnswers == 0) {
-            return redirect()->route('quiz-results', ['quizId' => $id]);
-        }
+
 
         if($showAnswers != null && $showAnswers->count() > 0) {
             $showAnswers = $showAnswers->value;
@@ -112,6 +110,10 @@ class AppController extends Controller
                 }
 
             }
+        }
+
+        if($canChangeAnswers == 0 && !$this->isAttemptedUser($user_id, $the_quiz->id) ) {
+            return redirect()->route('quiz-results', ['quizId' => $id]);
         }
 
         $userPrefferedLanguage = UserPreference::where('user_id', auth()->user()->id)->where('key', 'language')->get()->first();
@@ -255,6 +257,15 @@ class AppController extends Controller
         ]);
     }
 
+
+    private function isAttemptedUser($user_id, $quiz_id)
+    {
+        $attempt = Answer::where('user_id', $user_id)->where('quiz_id', $quiz_id)->first();
+        if ($attempt) {
+            return true;
+        }
+        return false;
+    }
 
 
 }
