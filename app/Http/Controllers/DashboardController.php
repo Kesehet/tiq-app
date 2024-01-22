@@ -41,15 +41,21 @@ class DashboardController extends Controller
 
         $recentQuiz = Quiz::latest()->take(5)->get();
 
-        $recentQuizStats = [];
-        foreach($recentQuiz as $quiz){
-            $attempted = Answer::where('quiz_id',$quiz->id)->select('user_id')->distinct()->count();
-            if($attempted == 0){
-                continue;
+        $recentQuizzes = Quiz::withCount(['answers as attempts' => function ($query) {
+            $query->select(DB::raw('count(distinct user_id)'));
+        }])
+        ->orderBy('attempts', 'desc') // Sort by number of attempts
+        ->get();
+        
+        $recentQuizStats = ['labels' => [], 'data' => []];
+        
+        foreach ($recentQuizzes as $quiz) {
+            if ($quiz->attempts > 0) {
+                $recentQuizStats['labels'][] = $quiz->title;
+                $recentQuizStats['data'][] = $quiz->attempts;
             }
-            $recentQuizStats["labels"][] = $quiz->title;
-            $recentQuizStats["data"][] = $attempted;
         }
+        
 
 
 

@@ -45,6 +45,11 @@ class Quiz extends Model
         return $this->belongsToMany(Tag::class, 'quiz_tag');
     }
 
+    public function answers()
+    {
+        return $this->hasMany(Answer::class, 'quiz_id');
+    }
+
     
 
 
