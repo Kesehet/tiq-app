@@ -67,7 +67,7 @@ class AppController extends Controller
                 $scoreTotal = $scoreTotal + $scoreNow;
             }
             $scoreSheet["score"][] = $scoreTotal;
-            $scoreSheet["quiz"][] = Quiz::find($quiz->quiz_id)->title;
+            $scoreSheet["quiz"][] = Quiz::find($quiz_id)->title;
         }
 
         $latestQuizzes = Quiz::whereNotIn('id', $attemptedQuizIds)->latest()->take(5)->get();
