@@ -57,20 +57,20 @@ class AppController extends Controller
         $attemptedQuizIds = $quizAttemptedByUser->pluck('quiz_id');
 
         // Fetch top 50 quizzes by score
-        $topByScoreQuizzes = Answer::where('user_id', $user_id)
-            ->where('is_correct', 1)
+        $topByScoreQuizzes = Answer::where('answers.user_id', $user_id)
+            ->where('answers.is_correct', 1)
             ->join('options', 'answers.option_id', '=', 'options.id')
-            ->selectRaw('quiz_id, sum(options.score) as total_score')
-            ->groupBy('quiz_id')
+            ->selectRaw('answers.quiz_id, sum(options.score) as total_score')
+            ->groupBy('answers.quiz_id')
             ->orderByDesc('total_score')
             ->take(50)
             ->get();
 
         // Fetch top 50 most recent quizzes
-        $recentQuizzes = Answer::where('user_id', $user_id)
-            ->select('quiz_id')
+        $recentQuizzes = Answer::where('answers.user_id', $user_id)
+            ->select('answers.quiz_id')
             ->distinct()
-            ->latest()
+            ->latest('answers.created_at')
             ->take(50)
             ->get();
 
@@ -83,9 +83,9 @@ class AppController extends Controller
         $scoreSheet = ['score' => [], 'quiz' => []];
 
         foreach ($combinedQuizzes as $quizId) {
-            $totalScore = Answer::where('user_id', $user_id)
-                ->where('quiz_id', $quizId)
-                ->where('is_correct', 1)
+            $totalScore = Answer::where('answers.user_id', $user_id)
+                ->where('answers.quiz_id', $quizId)
+                ->where('answers.is_correct', 1)
                 ->join('options', 'answers.option_id', '=', 'options.id')
                 ->sum('options.score');
 
