@@ -37,7 +37,7 @@
                 
                 <ul class="w3-ul w3-border w3-padding-large" id="option_holder">
                 @foreach($options->where('question_id', $question->id) as $option)
-                    <div class="w3-card w3-animate-left w3-padding" onclick="handleRadioClick(this.children[0].children[0]);">
+                    <div class="w3-card w3-animate-left option_set_{{ $question->id }} w3-padding" onclick="handleRadioClick(this.children[0].children[0],'option_set_{{ $question->id }}');">
                         <label>
                             <input type="radio" name="question_{{ $question->id }}" qid="{{ $question->id }}" value="{{ $option->id }}" style="display:none;">
                             <i class="fa fa-circle w3-left"></i>
@@ -68,14 +68,14 @@
 </script>
 
 <script>
-    function handleRadioClick(radio) {
+    function handleRadioClick(radio,classes) {
         // Reset all options' styles
-        document.querySelectorAll('.w3-card').forEach(function(card) {
+        document.querySelectorAll('.'+classes).forEach(function(card) {
             card.classList.remove('w3-blue');
         });
 
         // Apply the style to the selected option
-        radio.closest('.w3-card').classList.add('w3-blue');
+        radio.closest('.'+classes).classList.add('w3-blue');
         radio.checked = true;
         ANSWERS[radio.getAttribute('qid')] = radio.value;
     }
