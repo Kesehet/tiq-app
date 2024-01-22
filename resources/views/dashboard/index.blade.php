@@ -16,8 +16,19 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    
     <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&display=swap" rel="stylesheet">
 
+    <!--adding custom ttf fonts to the project-->
+    <style>
+        @font-face {
+            font-family: 'Jameel Noori Nastaleeq';
+            src: url('{{ asset('fonts/jameel-noori-nastaleeq-regular.ttf') }}') format('truetype');
+        }
+        .jameel-noori-nastaleeq-regular {
+            font-family: 'Jameel Noori Nastaleeq', sans-serif; /* Fallback to sans-serif if custom font is not loaded */
+        }
+    </style>
     <script>
         // Script to toggle the sidebar on and off
         function toggleSidebar() {

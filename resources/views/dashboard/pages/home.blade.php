@@ -86,7 +86,7 @@
        </tr>
        @endforeach
      </table><br>
-    <a href="{{ route('dashboard.question.combo') }}" class="w3-button w3-dark-grey">Add Questions<i class="fa fa-arrow-right"></i></a>
+    <a href="{{ route('dashboard.question.combo') }}" class="w3-button w3-dark-grey">Add Quiz<i class="fa fa-arrow-right"></i></a>
 
      </div>
 
