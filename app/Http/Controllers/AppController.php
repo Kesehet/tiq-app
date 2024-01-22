@@ -36,7 +36,6 @@ class AppController extends Controller
                         // Handle invalid token (e.g., do nothing or clear the cookie)
                     }
                 }
-                dd($user);
                 return redirect()->route('home');
             }
             return view('auth.mobile', [
