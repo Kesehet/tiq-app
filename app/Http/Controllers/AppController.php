@@ -38,9 +38,6 @@ class AppController extends Controller
                 }
                 return redirect()->route('home');
             }
-            return view('auth.mobile', [
-                'code' => $_GET['code'],
-            ]);
         }
 
 
