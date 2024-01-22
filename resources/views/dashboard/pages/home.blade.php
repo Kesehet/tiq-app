@@ -91,7 +91,7 @@
      </div>
 
 
-     <div class="w3-padding w3-col l6 s12 m3 ">
+     <div class="w3-padding w3-col l6 s12 m6 ">
      <canvas id="myChart" width="400" height="400"></canvas> <!-- Canvas element for the chart -->
       <script>
      var ctx = document.getElementById('myChart').getContext('2d');
