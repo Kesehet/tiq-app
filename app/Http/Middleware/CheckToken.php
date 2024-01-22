@@ -22,7 +22,7 @@ class CheckToken
                 }
             }
         }
-        \Log::info(($token ?? 'NO TOKEN') . ' <-  TOKEN  -> ' . $request->cookie('token') . ' <-  TOKEN  -> ' . $request->header('token'));
+        \Log::info(($token ?? 'NO TOKEN') . ' <-  TOKEN  -> ' . $request->cookie('token') . ' <-  TOKEN  -> ' . $request->header('token'). ' <-  TOKEN GET  -> '. json_encode($_GET));
         return $next($request);
     }
 }
