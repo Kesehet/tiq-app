@@ -11,8 +11,6 @@
 </div>
 
 
-@json($scoreSheet)
-
 <script>
 
 
