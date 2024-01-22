@@ -54,24 +54,49 @@ class AppController extends Controller
     {
         $user_id = Auth::user()->id;
         $quizAttemptedByUser = Answer::where("user_id",$user_id)->select("quiz_id")->distinct()->get();
-
         $attemptedQuizIds = $quizAttemptedByUser->pluck('quiz_id');
-           $scoreSheet = [];
-           $scoreSheet["score"] = [];
-           $scoreSheet["quiz"] = [];
-        foreach($attemptedQuizIds as $quiz_id){
-            $quiz_id = Quiz::find($quiz_id)->id;
-            $correctAnswers = Answer::where("user_id",$user_id)->where("quiz_id",$quiz_id)->where("is_correct", 1)->get();
-            $scoreTotal = 0;
-            foreach($correctAnswers as $ans){
-                $scoreNow = Option::find($ans->option_id)->score;
-                $scoreTotal = $scoreTotal + $scoreNow;
-            }
-            $scoreSheet["score"][] = $scoreTotal;
-            $scoreSheet["quiz"][] = Quiz::find($quiz_id)->title;
+
+        // Fetch top 50 quizzes by score
+        $topByScoreQuizzes = Answer::where('user_id', $user_id)
+            ->where('is_correct', 1)
+            ->join('options', 'answers.option_id', '=', 'options.id')
+            ->selectRaw('quiz_id, sum(options.score) as total_score')
+            ->groupBy('quiz_id')
+            ->orderByDesc('total_score')
+            ->take(50)
+            ->get();
+
+        // Fetch top 50 most recent quizzes
+        $recentQuizzes = Answer::where('user_id', $user_id)
+            ->select('quiz_id')
+            ->distinct()
+            ->latest()
+            ->take(50)
+            ->get();
+
+        // Combine and remove duplicates
+        $combinedQuizzes = $topByScoreQuizzes->merge($recentQuizzes)
+            ->unique('quiz_id')
+            ->pluck('quiz_id');
+
+        // Get scores and titles for combined quizzes
+        $scoreSheet = ['score' => [], 'quiz' => []];
+
+        foreach ($combinedQuizzes as $quizId) {
+            $totalScore = Answer::where('user_id', $user_id)
+                ->where('quiz_id', $quizId)
+                ->where('is_correct', 1)
+                ->join('options', 'answers.option_id', '=', 'options.id')
+                ->sum('options.score');
+
+            $quizTitle = Quiz::where('id', $quizId)->value('title');
+
+            $scoreSheet['score'][] = $totalScore;
+            $scoreSheet['quiz'][] = $quizTitle;
         }
 
         $latestQuizzes = Quiz::whereNotIn('id', $attemptedQuizIds)->latest()->take(5)->get();
+        
         return view('app.index', [
             'showPage' => 'home',
             'latestQuizzes' => $latestQuizzes,
