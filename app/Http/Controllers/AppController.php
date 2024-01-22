@@ -35,7 +35,6 @@ class AppController extends Controller
     public function postLoginRedirect()
     {
         if(isset($_GET['is_mobile'])){
-            \Log::info($_GET['code']);
             // return a custom view
             return view('auth.mobile', [
                 'code' => $_GET['code'],
