@@ -156,29 +156,29 @@ class AppController extends Controller
         $totalQuestions = Question::where('quiz_id', $quizId)->count();
 
 
-
         $leaderboard = Answer::with('user', 'option')
-            ->where('quiz_id', $quizId)
-            ->get()
-            ->groupBy('user_id')
-            ->map(function ($answers) {
-                // Check if the user is loaded and has a name
-                $user = $answers->first()->user;
-                if ($user) {
-                    return [
-                        'name' => $user->name,
-                        'total_score' => $answers->sum(function ($answer) {
-                            return $answer->option ? $answer->option->score : 0;
-                        })
-                    ];
-                }
-                return null; // or handle it in a way that suits your application logic
-            })
-            ->filter() // Remove null values
-            ->sortByDesc('total_score')
-            ->take(10)
-            ->values()
-            ->all();
+        ->where('quiz_id', $quizId)
+        ->get()
+        ->groupBy('user_id')
+        ->map(function ($answers) {
+            $user = $answers->first()->user;
+            if ($user) {
+                return [
+                    'name' => $user->name,
+                    'total_score' => $answers->sum(function ($answer) {
+                        return $answer->option ? $answer->option->score : 0;
+                    }),
+                    'first_submission' => $answers->sortBy('updated_at')->first()->updated_at
+                ];
+            }
+            return null; // or handle it in a way that suits your application logic
+        })
+        ->filter() // Remove null values
+        ->sortBy('first_submission') // Sort by the first submission date
+        ->take(10)
+        ->values()
+        ->all();
+    
 
             $questionsWithAnswers = Question::with(['options', 'answers' => function ($query) use ($user) {
                 $query->where('user_id', $user->id);
