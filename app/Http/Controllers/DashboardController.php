@@ -65,9 +65,9 @@ class DashboardController extends Controller
          'quizcount' => $quizcount,
          'questioncount'  => $questioncount,
          'languagecount'     => $languagecount,
-          'usercount'   => $usercount,
-           'recentQuiz'=> $recentQuiz,
-           "recentQuizStats"=>$recentQuizStats,
+         'usercount'   => $usercount,
+         'recentQuiz'=> $recentQuiz,
+         "recentQuizStats"=>$recentQuizStats,
 
 
 
@@ -211,7 +211,8 @@ class DashboardController extends Controller
 
         return view('dashboard.index',[
             'showPage' => 'questionAll',
-            'questions' => $questions
+            'questions' => $questions,
+            'languages' => Language::all()
         ]);
     }
 
@@ -222,21 +223,29 @@ class DashboardController extends Controller
             return redirect()->route('home');
         }
 
-        $quiz = Quiz::find($request->quiz_id);
+        $question = Question::find($request->question_id ?? 0);
 
-        if($quiz == null) {
-            // get the quiz that was recently added ...
-            $quiz = Quiz::all()->last();
-        }
 
         return view('dashboard.index', [
             'showPage' => 'questionCreate',
-            'quiz_selected' => $quiz,
-            'quizzes' => Quiz::all(),
+            'question_selected' => $question,
+            'translations'=> Translation::all(), 
             'languages' => Language::all(),
+            'quizzes' => Quiz::all(),
+            'quiz_selected' => Quiz::find($question->quiz_id ?? 0)
         ]);
     }
 
+    public function questionDelete(Request $request, $id){
+        $user = Auth::user();
+        if(!$user->isTeamMember()) {
+            return redirect()->route('home');
+        }
+
+        $question = Question::find($id);
+        $question->delete();
+        return redirect()->route('dashboard.questions');
+    }
 
     public function questionStore(Request $request)
     {
@@ -250,13 +259,15 @@ class DashboardController extends Controller
             'question_text' => 'required|max:255',
         ]);
 
-        $question = Question::create($data);
+        $question = Question::updateOrCreate(['id' => $request->question_id],$data);
 
         // add Translations question_text_[Language name]
         foreach(Language::all() as $language) {
-            Translation::create([
+            Translation::updateOrCreate([
+                
                 'question_id' => $question->id,
                 'language_id' => $language->id,
+            ],[
                 'translated_text' => $request->input('question_text_' . $language->id),
             ]);
         }
@@ -265,10 +276,10 @@ class DashboardController extends Controller
         if($request->add_option == 1) {
             return redirect()->route('dashboard.question.create', ['quiz_id' => $quiz->id]);
         }
-        return redirect()->route('dashboard.quizzes');
+        return redirect()->route('dashboard.questions');
     }
 
-    
+
 
 
     public function combined(){

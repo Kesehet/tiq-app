@@ -44,8 +44,11 @@ Route::get('backend/languages/delete/{id}', [DashboardController::class, 'langua
 
 Route::get('backend/quizzes', [DashboardController::class, 'quizzes'])->name('dashboard.quizzes');
 Route::get('backend/quizzes/create', [DashboardController::class, 'quizCreate'])->name('dashboard.quiz.create');
+
+
 Route::get('backend/questions', [DashboardController::class, 'questions'])->name('dashboard.questions');
 Route::get('backend/questions/create', [DashboardController::class, 'questionCreate'])->name('dashboard.question.create');
+Route::get('backend/questions/delete/{id}', [DashboardController::class, 'questionDelete'])->name('dashboard.question.delete');
 
 Route::get('backend/quizzes/combo', [DashboardController::class, 'combined'])->name('dashboard.question.combo');
 Route::post('backend/quizzes/combo/store', [DashboardController::class, 'combinedStore'])->name('dashboard.question.combo.store');
