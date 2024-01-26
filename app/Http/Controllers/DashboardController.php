@@ -268,6 +268,9 @@ class DashboardController extends Controller
         return redirect()->route('dashboard.quizzes');
     }
 
+    
+
+
     public function combined(){
         $languages = Language::all();
         return view('dashboard.index',[

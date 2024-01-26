@@ -35,8 +35,6 @@ class AppController extends Controller
             }
             return redirect()->route('home');
         }
-        
-
 
         $this->middleware('auth');
 
@@ -45,7 +43,6 @@ class AppController extends Controller
             // Redirect to the dashboard
             return redirect()->route('dashboard');
         }
-
     }
 
     public function postLoginRedirect(Request $request)

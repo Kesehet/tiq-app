@@ -100,7 +100,7 @@
          data: {
              labels: @json($recentQuizStats["labels"] ?? []),
              datasets: [{
-                 label: '# ',
+                 label: 'Users who have attempted this Quiz',
                  data: @json($recentQuizStats["data"] ?? []),
                  backgroundColor: 'rgba(0, 92, 39, 0.2)',
                  borderColor: 'rgba(0, 92, 39, 1)',
