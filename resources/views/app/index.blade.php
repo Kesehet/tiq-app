@@ -29,9 +29,9 @@
     <div class="content w3-animate-opacity">
         <div class="w3-container w3-padding">
             <!-- Your main content goes here -->
-            
+
             @include('app.pages.'.$showPage)
-            
+
             <!-- Add more content here -->
         </div>
     </div>
@@ -52,3 +52,5 @@
     </script>
 </body>
 </html>
+
+

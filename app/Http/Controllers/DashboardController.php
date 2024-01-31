@@ -46,16 +46,16 @@ class DashboardController extends Controller
         }])
         ->orderBy('attempts', 'desc') // Sort by number of attempts
         ->get();
-        
+
         $recentQuizStats = ['labels' => [], 'data' => []];
-        
+
         foreach ($recentQuizzes as $quiz) {
             if ($quiz->attempts > 0) {
                 $recentQuizStats['labels'][] = $quiz->title;
                 $recentQuizStats['data'][] = $quiz->attempts;
             }
         }
-        
+
 
 
 
@@ -229,7 +229,7 @@ class DashboardController extends Controller
         return view('dashboard.index', [
             'showPage' => 'questionCreate',
             'question_selected' => $question,
-            'translations'=> Translation::all(), 
+            'translations'=> Translation::all(),
             'languages' => Language::all(),
             'quizzes' => Quiz::all(),
             'quiz_selected' => Quiz::find($question->quiz_id ?? 0)
@@ -264,7 +264,7 @@ class DashboardController extends Controller
         // add Translations question_text_[Language name]
         foreach(Language::all() as $language) {
             Translation::updateOrCreate([
-                
+
                 'question_id' => $question->id,
                 'language_id' => $language->id,
             ],[
@@ -302,7 +302,7 @@ class DashboardController extends Controller
         $questions = $request->questions;
 
         $quiz = Quiz::create([
-            'title' => $request->name, 
+            'title' => $request->name,
             'description' => $request->description,
             'featured_image' => $request->featured_image,
         ]);
@@ -310,13 +310,13 @@ class DashboardController extends Controller
         QuizPreference::updateOrCreate([
             'quiz_id' => $quiz->id,
             'key' => 'showAnswers',
-        ],[            
+        ],[
             'value' => $request->show_answers,
         ]);
         QuizPreference::updateOrCreate([
             'quiz_id' => $quiz->id,
             'key' => 'canChangeAnswers',
-        ],[            
+        ],[
             'value' => $request->can_change_answer,
         ]);
         foreach($questions as $question) {
@@ -358,7 +358,17 @@ class DashboardController extends Controller
 
         return response()->json($request->all());
     }
+    public function users(){
+        $user = Auth::user();
+        if(!$user->isTeamMember()) {
+            return redirect()->route('home');
+        }
+         return view('dashboard.index', [
+                     'showPage' => 'users',
+                      'Users' => User::all(),
+                 ]);
 
+    }
 
 
 

@@ -42,6 +42,8 @@ Route::post('backend/languages/store', [DashboardController::class, 'languageSto
 Route::get('backend/languages/delete/{id}', [DashboardController::class, 'languageDelete'])->name('dashboard.languages.destroy');
 
 
+Route::get('backend/user', [DashboardController::class, 'users'])->name('dashboard.users');
+
 Route::get('backend/quizzes', [DashboardController::class, 'quizzes'])->name('dashboard.quizzes');
 Route::get('backend/quizzes/create', [DashboardController::class, 'quizCreate'])->name('dashboard.quiz.create');
 
@@ -59,14 +61,14 @@ Route::post('backend/questions/store', [DashboardController::class, 'questionSto
 
 
 
-// APIs 
+// APIs
 Route::post('/api/submit-quiz/{id}', [QuizController::class, 'submit'])->name('submit-quiz');
 Route::post('/settings', [AppController::class, 'savePreferences'])->name('settings.save');
 Route::post('/quizzes/{quiz}/tags', [QuizController::class, 'addTagToQuiz'])->name('quizzes.addTag');
 Route::delete('/quizzes/{quiz}/tags/{tag}', [QuizController::class, 'removeTagFromQuiz'])->name('quizzes.removeTag');
 Route::get('/tags/{tag}/quizzes', [QuizController::class, 'getQuizzesByTag'])->name('tags.quizzes');
 
-// Dashboard APIs 
+// Dashboard APIs
 
 
 
