@@ -23,8 +23,8 @@
     </script>
 </head>
 <body>
-    <div class="top-nav quran-text w3-feature" style="width:100vw;">
-         TIQ App
+    <div class="top-nav quran-text w3-feature" style="width:100vw;padding: 0px">
+         <img src="{{ asset('imgs/tiq-grand-logo.png') }}" style="width: 100%">
     </div>
     <div class="content w3-animate-opacity">
         <div class="w3-container w3-padding">
