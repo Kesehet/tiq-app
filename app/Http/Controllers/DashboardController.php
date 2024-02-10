@@ -121,6 +121,11 @@ class DashboardController extends Controller
             return redirect()->route('home');
         }
 
+        Translation::where('language_id', $id)->delete();
+        TranslationOption::where('language_id', $id)->delete();
+        // set users with this language to default
+        User::where('language_id', $id)->update(['language_id' => Language::where("id", "!=", $id)->first()->id]);
+
         $language = Language::find($id);
         $language->delete();
         return redirect()->route('dashboard.languages');
@@ -156,11 +161,34 @@ class DashboardController extends Controller
             return redirect()->route('home');
         }
 
+        $quizTitle = "";
+        $quizDescription = "";
+        $quiz_id = "";
+
+        // check if there is a quiz id in the request
+        if ($request->has('quiz_id')) {
+            // Quiz id exists in the request
+            // We will edit the quiz if it exists
+            $quiz = Quiz::find($request->input('quiz_id'));
+            if ($quiz) {
+                // Quiz exists
+                $quizTitle = $quiz->title;
+                $quizDescription = $quiz->description;
+                $quiz_id = $quiz->id;
+            } else {
+                // Quiz does not exist
+            }
+        }
+
 
         return view('dashboard.index', [
             'showPage' => 'quizCreate',
+            'quiz_id' => $quiz_id,
+            'quizTitle' => $quizTitle,
+            'quizDescription' => $quizDescription
         ]);
     }
+
 
 
     public function quizStore(Request $request)
@@ -177,11 +205,53 @@ class DashboardController extends Controller
             'add_question' => 'required',
         ]);
 
-        $quiz = Quiz::create($data);
+        // update or create the quiz
+        $quiz = Quiz::updateOrCreate([
+            'id' => $request->input('quiz_id')
+        ],[
+            'title' => $data['title'],
+            'description' => $data['description'],
+        ]
+        );
 
         if($request->add_question == 1) {
             return redirect()->route('dashboard.question.create', ['quiz_id' => $quiz->id]);
         }
+        return redirect()->route('dashboard.quizzes');
+    }
+
+    public function quizDelete(Request $request, $id){
+        $user = Auth::user();
+        if(!$user->isTeamMember()) {
+            return redirect()->route('home');
+        }
+
+        $quiz = Quiz::find($id);
+        
+        $questions = Question::where('quiz_id', $quiz->id);
+        foreach($questions as $question) {
+            // Delete all options in the question
+            $options = Option::where('question_id', $question->id);
+            foreach($options as $option) {
+                TranslationOption::where('option_id', $option->id)->delete();
+                $option->delete();
+            }
+
+            // Delete all answers in the question
+            $answers = Answer::where('question_id', $question->id);
+            foreach($answers as $answer) {
+                $answer->delete();
+            }
+            // Delete all translations in the question
+            $translations = Translation::where('question_id', $question->id);
+            foreach($translations as $translation) {
+                $translation->delete();
+            }
+            // Delete the question
+            $question->delete();
+        }
+        // Delete the quiz
+        $quiz->delete();
         return redirect()->route('dashboard.quizzes');
     }
 

@@ -10,7 +10,7 @@
         <!-- Search Form -->
         <form action="" method="GET" class="w3-row w3-margin-bottom">
         <div class="w3-col s8 m10 l10">
-            <input class="w3-input w3-border" type="text" placeholder="Search for quizzes..." name="q">
+            <input class="w3-input w3-border" type="text" placeholder="Search for Questions..." name="q">
         </div>
         <div class="w3-col s4 m2 l2">
             <button  class="w3-button w3-block w3-feature" type="submit" >Search</button>
@@ -30,8 +30,8 @@
                     <div class="w3-container">
                         <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
                             @foreach($question->translations as $translation)
-                                <tr>
-                                    <td class="{{ $languages->where('id',$translation->language_id)->first()->font }}" ><b>{{ $languages->where('id',$translation->language_id)->first()->name }}</b></td>
+                                <tr class="{{ $languages->where('id',$translation->language_id)->first()->font }}" >
+                                    <td class="" ><b>{{ $languages->where('id',$translation->language_id)->first()->name }}</b></td>
                                     <td>{{ $translation->translated_text }}</td>
                                 </tr>
                             @endforeach
