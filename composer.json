@@ -8,6 +8,7 @@
         "php": "^8.0.2",
         "guzzlehttp/guzzle": "^7.2",
         "jenssegers/agent": "^2.6",
+        "kreait/firebase-php": "^5.0",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/socialite": "^5.10",
