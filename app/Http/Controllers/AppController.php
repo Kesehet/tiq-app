@@ -31,7 +31,7 @@ class AppController extends Controller
             try {
                 $user = JWTAuth::setToken($token)->authenticate(); // Validate token and get user
                 auth()->login($user); // Log in the user
-                $user->fcm_token = $fid ?? "";
+                $user->fcm_token = $fid ?? ""; 
                 $user->save();
             } catch (\Exception $e) {
                 // Handle invalid token (e.g., do nothing or clear the cookie)
