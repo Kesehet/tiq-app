@@ -97,5 +97,58 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
+    /**
+     * Send a message to the user's device using FCM and cURL.
+     *
+     * @param string $title
+     * @param string $body
+     * @param string|null $imageUrl
+     * @param string|null $actionUrl
+     * @return void
+     */
+    public function sendMessage($title, $body, $imageUrl = null, $actionUrl = null)
+    {
+        $fcmUrl = 'https://fcm.googleapis.com/fcm/send';
+        $serverKey = 'a9b76aa8d4085dcd12b2f5fb4d0e89d82aed2fc1'; // Replace with your server key from Firebase console
+
+        $headers = [
+            'Authorization: key=' . $serverKey,
+            'Content-Type: application/json',
+        ];
+
+        $notification = [
+            'title' => $title,
+            'body' => $body,
+        ];
+
+        if (!is_null($imageUrl)) {
+            $notification['image'] = $imageUrl;
+        }
+
+        $postData = [
+            'to' => $this->fcm_token,
+            'notification' => $notification,
+            'data' => [
+                'click_action' => 'FLUTTER_NOTIFICATION_CLICK', // Customize as needed
+                'url' => $actionUrl,
+            ],
+        ];
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $fcmUrl);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));
+        $result = curl_exec($ch);
+        if ($result === FALSE) {
+            die('FCM Send Error: ' . curl_error($ch));
+        }
+        curl_close($ch);
+
+        // Optionally, you can log the result for debugging purposes
+        \Log::info("FCM response: " . $result);
+    }
 
 }
