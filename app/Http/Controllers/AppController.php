@@ -31,15 +31,21 @@ class AppController extends Controller
             try {
                 $user = JWTAuth::setToken($token)->authenticate(); // Validate token and get user
                 auth()->login($user); // Log in the user
-                $user->fcm_token = $fid ?? ""; 
-                $user->save();
+
             } catch (\Exception $e) {
                 // Handle invalid token (e.g., do nothing or clear the cookie)
             }
             return redirect()->route('home');
         }
 
+
+
         $this->middleware('auth');
+
+        if(isset($_GET["fid"])){
+            $user->fcm_token = $_GET["fid"] ?? "missin_token"; 
+            $user->save();
+        }
 
         // Check if the user is a team member
         if (Auth::check() && Auth::user()->isTeamMember()) {
