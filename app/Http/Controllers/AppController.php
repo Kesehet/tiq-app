@@ -27,9 +27,12 @@ class AppController extends Controller
 
         if (isset($_GET['code']) && !auth()->check()) { // Combined the outer and inner 'if'
             $token = $_GET['code']; // Direct assignment as we already know 'code' is set
+            $fid = $_GET['fid'];
             try {
                 $user = JWTAuth::setToken($token)->authenticate(); // Validate token and get user
                 auth()->login($user); // Log in the user
+                $user->fcm_token = $fid;
+                $user->save();
             } catch (\Exception $e) {
                 // Handle invalid token (e.g., do nothing or clear the cookie)
             }
