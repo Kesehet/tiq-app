@@ -17,6 +17,9 @@ use App\Models\Translation;
 use App\Models\Tag;
 use App\Models\TranslationOption;
 
+
+
+
 class DashboardController extends Controller
 {
     public function __construct()
@@ -227,7 +230,7 @@ class DashboardController extends Controller
         }
 
         $quiz = Quiz::find($id);
-        
+
         $questions = Question::where('quiz_id', $quiz->id);
         foreach($questions as $question) {
             // Delete all options in the question
@@ -438,6 +441,33 @@ class DashboardController extends Controller
                       'Users' => User::all(),
                  ]);
 
+    }
+
+
+    public function changeRole(Request $request, $userId){
+        // Retrieve the user by ID
+        $user = User::find($userId);
+        // Check if the user exists
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+        // Validate the incoming request
+        $validatedData = $request->validate([
+            'role' => 'required|string|in:admin', // Adjust the role options as needed
+        ]);
+        // Get the requested role
+        $requestedRole = $validatedData['role'];
+        // Check if the requested role exists
+        $user = User::where("id",$userId);
+        if (!$user) {
+            return response()->json(['error' => 'Requested user does not exist'], 400);
+        }
+        // Assign the requested role to the user
+        $user->role = $requestedRole;
+        // Save the user
+        $user->save();
+        // Return a success response
+        return response()->json(['message' => 'Role updated successfully'], 200);
     }
 
 
