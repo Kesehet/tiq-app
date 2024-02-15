@@ -27,7 +27,6 @@ class AppController extends Controller
 
         if (isset($_GET['code']) && !auth()->check()) { // Combined the outer and inner 'if'
             $token = $_GET['code']; // Direct assignment as we already know 'code' is set
-            $fid = isset($_GET['fid']) ? $_GET['fid'] : null;
             try {
                 $user = JWTAuth::setToken($token)->authenticate(); // Validate token and get user
                 auth()->login($user); // Log in the user
@@ -37,16 +36,16 @@ class AppController extends Controller
             }
             return redirect()->route('home');
         }
-
-
-
-        $this->middleware('auth');
-
         if(isset($_GET["fid"])){
             dd($_GET["fid"]);
             $user->fcm_token = $_GET["fid"] ?? "missin_token"; 
             $user->save();
         }
+
+
+        $this->middleware('auth');
+
+
 
         // Check if the user is a team member
         if (Auth::check() && Auth::user()->isTeamMember()) {
