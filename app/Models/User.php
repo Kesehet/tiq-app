@@ -130,7 +130,7 @@ class User extends Authenticatable implements JWTSubject
 
         try {
             $firebase->send($message);
-            \Log::info("FCM message sent successfully to: " . $this->fcm_token);
+            \Log::info("FCM message sent successfully to: " . $this->name);
             return true;
         } catch (\Kreait\Firebase\Exception\MessagingException $e) {
             \Log::error("FCM message failed to send: " . $e->getMessage());
