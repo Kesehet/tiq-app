@@ -31,14 +31,21 @@
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->role }}</td>
                 <td>
-                    @if(!$user->role == 'admin')
-                        <form action="{{ route('dashboard.user.changeRole', ['userId' => $user->id]) }}" method="post">
+                    @if($user->role == 'admin')
+                        <form class="w3-padding" action="{{ route('dashboard.user.changeRole', ['userId' => $user->id]) }}" method="post">
+                            @csrf
                             <input type="hidden" name="role" value="admin">
                             <input type="submit" value="Make Admin" class="w3-button w3-green">
                         </form>
-                        <form action="{{ route('dashboard.user.changeRole', ['userId' => $user->id]) }}" method="post">
+                        <form class="w3-padding" action="{{ route('dashboard.user.changeRole', ['userId' => $user->id]) }}" method="post">
+                            @csrf
                             <input type="hidden" name="role" value="team">
                             <input type="submit" value="Make Team" class="w3-button w3-green">
+                        </form>
+                        <form class="w3-padding" action="{{ route('dashboard.user.changeRole', ['userId' => $user->id]) }}" method="post">
+                            @csrf
+                            <input type="hidden" name="role" value="user">
+                            <input type="submit" value="Make User" class="w3-button w3-green">
                         </form>
                     @endif
                 </td>

@@ -450,9 +450,10 @@ class DashboardController extends Controller
         if (!$user) {
             return response()->json(['error' => 'User not found'], 404);
         }
+
         // Validate the incoming request
         $validatedData = $request->validate([
-            'role' => 'required|string|in:admin,team', // Adjust the role options as needed
+            'role' => 'required|string|in:admin,team,user', // Adjust the role options as needed
         ]);
         // Get the requested role
         $requestedRole = $validatedData['role'];
@@ -461,7 +462,7 @@ class DashboardController extends Controller
         // Save the user
         $user->save();
         // Return a success response
-        return response()->json(['message' => 'Role updated successfully'], 200);
+        return response()->redirect(route('dashboard.users'));
     }
 
 
