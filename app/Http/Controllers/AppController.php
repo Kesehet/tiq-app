@@ -51,30 +51,30 @@ class AppController extends Controller
         }
     }
 
-    public function postLoginRedirect(Request $request)
-    {
-        // get the url 
-        
+public function postLoginRedirect(Request $request)
+{
+    // get the url 
+    
 
-        // Check if the request is a mobile request
-        if(isset($_GET['is_mobile'])){
-            // return a custom view
-            return view('auth.mobile', [
-                'code' => $_GET['code'],
-            ]);
-        }
-
-
-
-
-        // Check if the user is a team member
-        if (Auth::check() && Auth::user()->isTeamMember()) {
-            // Redirect to the dashboard
-            return redirect()->route('dashboard');
-        }
-        // Default redirect for other users
-        return redirect()->route('home');
+    // Check if the request is a mobile request
+    if(isset($_GET['is_mobile'])){
+        // return a custom view
+        return view('auth.mobile', [
+            'code' => $_GET['code'],
+        ]);
     }
+
+
+
+
+    // Check if the user is a team member
+    if (Auth::check() && Auth::user()->isTeamMember()) {
+        // Redirect to the dashboard
+        return redirect()->route('dashboard');
+    }
+    // Default redirect for other users
+    return redirect()->route('home');
+}
 
     public function home()
     {
