@@ -43,6 +43,7 @@ class AppController extends Controller
         $this->middleware('auth');
 
         if(isset($_GET["fid"])){
+            dd($_GET["fid"]);
             $user->fcm_token = $_GET["fid"] ?? "missin_token"; 
             $user->save();
         }
