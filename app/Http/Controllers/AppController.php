@@ -31,6 +31,7 @@ class AppController extends Controller
                 auth()->login($user); // Log in the user
                 $user->fcm_token = $_GET["fid"] ?? "missin_token"; 
                 $user->save();
+                $user->sendMessage('Hi there!', 'Welcome to Tiq!');
 
             } catch (\Exception $e) {
                 // Handle invalid token (e.g., do nothing or clear the cookie)
