@@ -112,6 +112,7 @@ class User extends Authenticatable implements JWTSubject
      * @return void
      */
     public function sendMessage($title, $body, $imageUrl = null, $actionUrl = null){
+
         $serviceAccountPath = storage_path(env('FIREBASE_SERVICE_ACCOUNT_PATH'));
         $firebase = (new Factory)
             ->withServiceAccount($serviceAccountPath) // Path to your Firebase service account JSON file
@@ -130,10 +131,13 @@ class User extends Authenticatable implements JWTSubject
         try {
             $firebase->send($message);
             \Log::info("FCM message sent successfully to: " . $this->fcm_token);
+            return true;
         } catch (\Kreait\Firebase\Exception\MessagingException $e) {
             \Log::error("FCM message failed to send: " . $e->getMessage());
+            return false;
         } catch (\Kreait\Firebase\Exception\FirebaseException $e) {
             \Log::error("Firebase error: " . $e->getMessage());
+            return false;
         }
     }
 
