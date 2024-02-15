@@ -36,7 +36,6 @@ class AppController extends Controller
             } catch (\Exception $e) {
                 // Handle invalid token (e.g., do nothing or clear the cookie)
             }
-            dd($user->sendMessage('Hi there!', 'Welcome to Tiq!'));
             return redirect()->route('home');
         }
 
