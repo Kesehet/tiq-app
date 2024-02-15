@@ -194,8 +194,7 @@ class DashboardController extends Controller
 
 
 
-    public function quizStore(Request $request)
-    {
+    public function quizStore(Request $request){
         $user = Auth::user();
         if(!$user->isTeamMember()) {
             return redirect()->route('home');

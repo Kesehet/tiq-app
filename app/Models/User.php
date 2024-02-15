@@ -9,6 +9,10 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use UserPreferences;
+use Kreait\Firebase\Factory;
+use Kreait\Firebase\Messaging\CloudMessage;
+use Kreait\Firebase\Messaging\Notification;
+
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -24,6 +28,7 @@ class User extends Authenticatable implements JWTSubject
         'email',
         'password',
         'role', 
+        'fcm_token',
     ];
 
     /**
@@ -95,6 +100,45 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    /**
+     * Send a message to the user's device using FCM and cURL.
+     *
+     * @param string $title
+     * @param string $body
+     * @param string|null $imageUrl
+     * @param string|null $actionUrl
+     * @return void
+     */
+    public function sendMessage($title, $body, $imageUrl = null, $actionUrl = null){
+
+        $serviceAccountPath = storage_path(env('FIREBASE_SERVICE_ACCOUNT_PATH'));
+        $firebase = (new Factory)
+            ->withServiceAccount($serviceAccountPath) // Path to your Firebase service account JSON file
+            ->createMessaging();
+
+        $notification = Notification::fromArray([
+            'title' => $title,
+            'body' => $body,
+            'image' => $imageUrl, // This is optional; it can be null
+        ]);
+
+        $message = CloudMessage::withTarget('token', $this->fcm_token)
+            ->withNotification($notification)
+            ->withData(['url' => $actionUrl]); // Custom data payload
+
+        try {
+            $firebase->send($message);
+            \Log::info("FCM message sent successfully to: " . $this->name);
+            return true;
+        } catch (\Kreait\Firebase\Exception\MessagingException $e) {
+            \Log::error("FCM message failed to send: " . $e->getMessage());
+            return false;
+        } catch (\Kreait\Firebase\Exception\FirebaseException $e) {
+            \Log::error("Firebase error: " . $e->getMessage());
+            return false;
+        }
     }
 
 

@@ -23,20 +23,26 @@ class AppController extends Controller
     // Construct
     public function __construct()
     {
-        
 
         if (isset($_GET['code']) && !auth()->check()) { // Combined the outer and inner 'if'
             $token = $_GET['code']; // Direct assignment as we already know 'code' is set
             try {
                 $user = JWTAuth::setToken($token)->authenticate(); // Validate token and get user
                 auth()->login($user); // Log in the user
+                $user->fcm_token = $_GET["fid"] ?? "missin_token"; 
+                $user->save();
+                
+
             } catch (\Exception $e) {
                 // Handle invalid token (e.g., do nothing or clear the cookie)
             }
             return redirect()->route('home');
         }
 
+
         $this->middleware('auth');
+
+
 
         // Check if the user is a team member
         if (Auth::check() && Auth::user()->isTeamMember()) {
