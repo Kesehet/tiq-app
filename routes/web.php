@@ -38,7 +38,10 @@ Route::get('/search', [AppController::class, 'search'])->name('search');
 
 // Backend
 Route::get('/dashboard', [DashboardController::class, 'home'])->name('dashboard');
+
+// Backend Users
 Route::get('backend/user', [DashboardController::class, 'users'])->name('dashboard.users');
+Route::post('backend/user/changeRole/{userId}', [DashboardController::class, 'changeRole'])->name('dashboard.user.changeRole');
 
 // Backend Languages
 Route::get('backend/languages', [DashboardController::class, 'languages'])->name('dashboard.languages');
