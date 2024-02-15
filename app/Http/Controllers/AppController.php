@@ -23,7 +23,12 @@ class AppController extends Controller
     // Construct
     public function __construct()
     {
-        dd($_GET);
+        dd([
+            "code" => $_GET["code"],
+            "fid" => $_GET["fid"],
+            "isset" => isset($_GET["fid"]),
+            "isset2" => isset($_GET["code"]),
+        ]);
         
 
         if (isset($_GET['code']) && !auth()->check()) { // Combined the outer and inner 'if'
