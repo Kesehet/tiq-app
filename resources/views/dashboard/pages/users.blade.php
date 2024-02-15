@@ -23,12 +23,25 @@
             <th>Name</th>
             <th>email</th>
             <th>Role</th>
+            <th>Action</th>
         </tr>
         @foreach($Users as $user)
             <tr>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->role }}</td>
+                <td>
+                    @if(!$user->role == 'admin')
+                        <form action="{{ route('dashboard.user.changeRole', ['userId' => $user->id]) }}" method="post">
+                            <input type="hidden" name="role" value="admin">
+                            <input type="submit" value="Make Admin" class="w3-button w3-green">
+                        </form>
+                        <form action="{{ route('dashboard.user.changeRole', ['userId' => $user->id]) }}" method="post">
+                            <input type="hidden" name="role" value="team">
+                            <input type="submit" value="Make Team" class="w3-button w3-green">
+                        </form>
+                    @endif
+                </td>
             </tr>
         @endforeach
     </table>
@@ -51,7 +64,7 @@ function filterTable() {
             } else {
                 tr[i].style.display = "none";
             }
-        }       
+        }
     }
 }
 </script>

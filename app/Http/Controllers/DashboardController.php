@@ -453,15 +453,10 @@ class DashboardController extends Controller
         }
         // Validate the incoming request
         $validatedData = $request->validate([
-            'role' => 'required|string|in:admin', // Adjust the role options as needed
+            'role' => 'required|string|in:admin,team', // Adjust the role options as needed
         ]);
         // Get the requested role
         $requestedRole = $validatedData['role'];
-        // Check if the requested role exists
-        $user = User::where("id",$userId);
-        if (!$user) {
-            return response()->json(['error' => 'Requested user does not exist'], 400);
-        }
         // Assign the requested role to the user
         $user->role = $requestedRole;
         // Save the user
